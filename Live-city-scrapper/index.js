@@ -6,7 +6,10 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 4001;
 
-app.use(cors());
+app.use(cors({
+  origin: 'https://avail-it.vercel.app',
+  credentials: true
+}));
 
 app.get('/api/delhi-hospitals', async (req, res) => {
   try {

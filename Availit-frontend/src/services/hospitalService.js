@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api/hospitals';
+const API_URL = process.env.REACT_APP_BACKEND_URL + '/api/hospitals';
+const AUTH_URL = process.env.REACT_APP_BACKEND_URL + '/api/auth';
+const SCRAPPER_URL = process.env.REACT_APP_SCRAPPER_URL + '/api';
 
 // Set up axios interceptor to attach JWT
 axios.interceptors.request.use(
@@ -36,12 +38,12 @@ export function getHospitalsByCity(city) {
 }
 
 export function getUserCity(username) {
-  return fetch(`http://localhost:8080/api/auth/city/${encodeURIComponent(username)}`)
+  return fetch(`${AUTH_URL}/city/${encodeURIComponent(username)}`)
     .then(res => res.json());
 }
 
 export function updateUserCity(username, city) {
-  return fetch(`http://localhost:8080/api/auth/city/${encodeURIComponent(username)}`, {
+  return fetch(`${AUTH_URL}/city/${encodeURIComponent(username)}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ city })
@@ -53,5 +55,5 @@ export function getAllCities() {
 }
 
 export function getDelhiHospitalsLive() {
-  return fetch('http://localhost:4001/api/delhi-hospitals').then(res => res.json());
+  return fetch(`${SCRAPPER_URL}/delhi-hospitals`).then(res => res.json());
 } 
