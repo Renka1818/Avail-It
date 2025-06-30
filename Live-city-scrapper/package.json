@@ -1,0 +1,15 @@
+{
+  "name": "delhi-hospital-scraper",
+  "version": "1.0.0",
+  "description": "Microservice to scrape and serve live Delhi hospital data as JSON",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  }
+} 
