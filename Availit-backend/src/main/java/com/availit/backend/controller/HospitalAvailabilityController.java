@@ -246,4 +246,10 @@ public class HospitalAvailabilityController {
         List<String> cities = hospitalAvailabilityService.getAllCities();
         return ResponseEntity.ok(cities);
     }
+
+    @PostMapping("/bulk")
+    public ResponseEntity<List<HospitalAvailability>> createHospitals(@RequestBody List<HospitalAvailability> hospitals) {
+        List<HospitalAvailability> created = hospitalAvailabilityService.createHospitals(hospitals);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
 }

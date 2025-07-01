@@ -62,4 +62,8 @@ public class HospitalAvailabilityService {
     public List<String> getAllCities() {
         return repository.findDistinctCities();
     }
+
+    public List<HospitalAvailability> createHospitals(List<HospitalAvailability> hospitals) {
+        return repository.saveAll(hospitals);
+    }
 }
