@@ -13,7 +13,11 @@ app.use(cors({
 
 app.get('/api/delhi-hospitals', async (req, res) => {
   try {
-    const { data } = await axios.get('https://dshm.delhi.gov.in/mis/(S(0phtuhcljd0u01xfvsz3cgrg))/Private/frmFreeBedMonitoringReport.aspx');
+    const { data } = await axios.get('https://dshm.delhi.gov.in/mis/(S(0phtuhcljd0u01xfvsz3cgrg))/Private/frmFreeBedMonitoringReport.aspx', {
+      headers: {
+        'User-Agent': 'AvailItScraper/1.0 (your@email.com)'
+      }
+    });
     const $ = cheerio.load(data);
     const hospitals = [];
     $('table.DataGridBody tr[align="center"]').each((i, row) => {
