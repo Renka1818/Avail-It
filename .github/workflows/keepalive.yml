@@ -4,6 +4,7 @@ on:
   schedule:
     # Runs every 3 minutes
     - cron: '*/3 * * * *'
+  workflow_dispatch:
 
 jobs:
   keepalive:
