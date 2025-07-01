@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Toaster } from './components/ui/toaster';
 import HospitalList from './components/HospitalList';
@@ -161,17 +161,49 @@ function RoleSelectPage() {
 function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint, loading, role }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const navRef = useRef();
   // Get user info from local/session storage
   const username = localStorage.getItem('username') || sessionStorage.getItem('username');
   const city = localStorage.getItem('city') || sessionStorage.getItem('city');
   const userRole = localStorage.getItem('role') || sessionStorage.getItem('role') || role;
 
+  // Close menus on outside click/touch
+  useEffect(() => {
+    function handleClick(e) {
+      if (!navRef.current) return;
+      if (!navRef.current.contains(e.target)) {
+        setMenuOpen(false);
+        setProfileOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClick);
+    document.addEventListener('touchstart', handleClick);
+    return () => {
+      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener('touchstart', handleClick);
+    };
+  }, []);
+
+  // Only one menu open at a time
+  const handleMenuToggle = () => {
+    setMenuOpen(o => {
+      if (!o) setProfileOpen(false);
+      return !o;
+    });
+  };
+  const handleProfileToggle = () => {
+    setProfileOpen(o => {
+      if (!o) setMenuOpen(false);
+      return !o;
+    });
+  };
+
   return (
-    <div className="flex items-center justify-between w-full mb-4 md:mb-8 mt-4 md:mt-6 px-2 relative z-30">
+    <div ref={navRef} className="flex items-center justify-between w-full mb-4 md:mb-8 mt-4 md:mt-6 px-2 relative z-30">
       {/* Hamburger menu - always visible */}
       <button
         className="flex items-center justify-center p-2 rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow border-2 border-white hover:scale-105 transition focus:outline-none"
-        onClick={() => setMenuOpen(o => !o)}
+        onClick={handleMenuToggle}
         aria-label="Open menu"
         style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.12)' }}
       >
@@ -220,7 +252,7 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
       <div className="relative flex items-center">
         <button
           className="flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow-lg border-2 border-white hover:scale-105 transition p-2 ml-2"
-          onClick={() => setProfileOpen(o => !o)}
+          onClick={handleProfileToggle}
           aria-label="Profile"
           style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.18)' }}
         >
