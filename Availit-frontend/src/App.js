@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { Toaster } from './components/ui/toaster';
 import HospitalList from './components/HospitalList';
@@ -224,6 +224,14 @@ function UserDashboard() {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [complaintLoading, setComplaintLoading] = useState(false);
   const [confirmDialog, setConfirmDialog] = useState({ open: false, action: null });
+  const [showLiveDataToast, setShowLiveDataToast] = useState(true);
+
+  useEffect(() => {
+    if (showLiveDataToast) {
+      const timer = setTimeout(() => setShowLiveDataToast(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showLiveDataToast]);
 
   const doLogout = () => {
     setLogoutLoading(true);
@@ -303,7 +311,7 @@ function UserDashboard() {
         cancelText="No"
       />
       <ComplaintModal open={showComplaint} onClose={() => setShowComplaint(false)} onSubmit={handleComplaint} />
-      <UserHospitalSearch />
+      <UserHospitalSearch showLiveDataToast={showLiveDataToast} />
     </>
   );
 }

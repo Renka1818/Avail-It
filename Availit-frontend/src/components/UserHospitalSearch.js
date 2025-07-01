@@ -7,6 +7,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import ReactDOM from 'react-dom';
+import { useToast } from '../hooks/use-toast';
 
 const LIVE_DATA_SOURCES = {
   delhi: {
@@ -16,7 +17,7 @@ const LIVE_DATA_SOURCES = {
   // Add more cities and their fetch functions here in the future
 };
 
-function UserHospitalSearch() {
+function UserHospitalSearch({ showLiveDataToast }) {
   const [hospitals, setHospitals] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
@@ -43,6 +44,8 @@ function UserHospitalSearch() {
   const [coordsError, setCoordsError] = useState(null);
   const [pendingCity, setPendingCity] = useState(null);
   const [showCityConfirm, setShowCityConfirm] = useState(false);
+  const { toast } = useToast();
+  const [showBanner, setShowBanner] = useState(true);
 
   useEffect(() => {
     if (!username) return;
@@ -66,6 +69,17 @@ function UserHospitalSearch() {
     const stored = localStorage.getItem('recentCities');
     if (stored) setRecentCities(JSON.parse(stored));
   }, [username]);
+
+  // Show toast on login
+  useEffect(() => {
+    if (showLiveDataToast) {
+      toast({
+        title: 'Live Data Available!',
+        description: 'Live hospital data is available for Delhi. Switch to Delhi city to see real-time updates.',
+        duration: 2000,
+      });
+    }
+  }, [showLiveDataToast, toast]);
 
   const fetchHospitals = (cityName) => {
     setLoading(true);
@@ -375,6 +389,17 @@ function UserHospitalSearch() {
 
   return (
     <>
+      {/* Persistent live data banner if city is not Delhi */}
+      {city && city.trim().toLowerCase() !== 'delhi' && showBanner && (
+        <div className="fixed top-4 right-4 z-[110] animate-pulse bg-green-100 border border-green-300 text-green-800 px-6 py-3 rounded-lg shadow-lg flex items-center gap-3">
+          <svg className="h-6 w-6 text-green-500 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="#22c55e" />
+            <path stroke="#fff" strokeWidth="2" d="M8 12l2 2 4-4" />
+          </svg>
+          <span className="font-semibold">Live data is available for <span className="underline">Delhi</span>! Switch to Delhi city for real-time hospital info.</span>
+          <button onClick={() => setShowBanner(false)} className="ml-2 text-green-700 hover:text-green-900 text-xl font-bold focus:outline-none">&times;</button>
+        </div>
+      )}
       {/* City Change Confirmation Dialog (always overlays UI) */}
       {showCityConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
