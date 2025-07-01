@@ -116,10 +116,12 @@ function HospitalList({ onEdit, refresh }) {
         .catch(() => setCoords(null));
     }, [city]);
     if (!coords) return (
-      <div className="flex items-center justify-center rounded-xl border border-gray-200 bg-white text-xs text-gray-400 shadow-md w-full h-[120px] md:w-[120px] md:h-[80px]">Map unavailable</div>
+      <div className="flex items-center justify-center rounded-xl border border-gray-200 bg-white text-xs text-gray-400 shadow-md w-full h-[120px] md:w-[120px] md:h-[80px] mx-4 my-2 md:mx-0 md:ml-4 md:my-0 p-4">
+        Map unavailable
+      </div>
     );
     return (
-      <div className="rounded-xl border border-gray-200 bg-white shadow-md overflow-hidden flex items-center justify-center w-full h-[120px] md:w-[120px] md:h-[80px]">
+      <div className="rounded-xl border border-gray-200 bg-white shadow-md overflow-hidden flex items-center justify-center w-full h-[120px] md:w-[120px] md:h-[80px] mx-4 my-2 md:mx-0 md:ml-4 md:my-0 p-1">
         <MapContainer
           center={[coords.lat, coords.lon]}
           zoom={12}
@@ -278,7 +280,7 @@ function HospitalList({ onEdit, refresh }) {
                       </Box>
                     </Grid>
                     <Grid item xs={12} md={4} className="flex gap-2 justify-end items-center">
-                      <div className="hidden md:flex items-center justify-center h-[80px] w-[120px]">
+                      <div className="hidden md:flex items-center justify-center h-[80px] w-[120px] md:ml-4">
                         <CityMap city={extractCity(hospital.address)} />
                       </div>
                       <div className="md:hidden w-full mt-2 flex items-center justify-center">
