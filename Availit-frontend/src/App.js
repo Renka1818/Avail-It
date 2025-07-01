@@ -424,76 +424,100 @@ function App() {
       ),
       disableBeacon: true,
       spotlightClicks: true,
+      styles: { tooltip: { maxWidth: 340 } },
     },
     {
       target: '.animate-slidein',
-      content: 'This is the main slogan and entry point. Click Get Started to begin!',
+      content: 'This is the main slogan and entry point.',
       placement: 'bottom',
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.bg-white/80',
       content: 'Here is the welcome message and app description.',
       placement: 'bottom',
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.bg-purple-600',
       content: 'Login as a User to search for hospitals and availability.',
       placement: 'top',
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.bg-blue-600',
       content: 'Login as an Admin to manage hospital data.',
       placement: 'top',
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.flex.items-center.justify-between.w-full.mb-4',
       content: 'This is the navigation bar. Use the hamburger menu and profile button for navigation and account actions.',
       placement: 'bottom',
+      styles: { tooltip: { maxWidth: 340 } },
     },
     {
       target: '.bg-gradient-to-br.from-blue-400.to-green-400',
       content: 'This is your profile button. Click to view your info or logout.',
       placement: 'left',
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.min-w-[120px].bg-blue-500',
       content: 'Use this button to go back to the previous page.',
       placement: 'bottom',
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.min-w-[120px].bg-red-600',
       content: 'File a complaint if you face any issues.',
       placement: 'bottom',
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.min-w-[120px].bg-yellow-500',
       content: 'File a complaint against a hospital (User only).',
       placement: 'bottom',
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.min-w-[120px].bg-indigo-600',
       content: 'Logout from your account.',
       placement: 'bottom',
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.statistics-bar',
       content: 'This bar shows live statistics for hospitals and beds.',
       placement: 'bottom',
+      styles: { tooltip: { maxWidth: 340 } },
     },
     {
       target: '.hospital-card',
       content: 'Each card shows a hospital. Click Show Map to view its location.',
       placement: 'top',
+      styles: { tooltip: { maxWidth: 340 } },
     },
     {
       target: '.show-map-btn',
       content: 'Click here to view the hospital on a map.',
       placement: 'left',
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.search-bar',
       content: 'Use this to search for hospitals by name, city, or type.',
       placement: 'bottom',
+      styles: { tooltip: { maxWidth: 320 } },
+    },
+    {
+      target: '.mt-14.px-10.py-5.rounded-full.bg-white.text-blue-700', // Get Started button
+      content: 'Click here to get started! The tour will continue after you click.',
+      placement: 'bottom',
+      spotlightClicks: true,
+      event: 'click',
+      disableOverlayClose: true,
+      styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: 'body',
@@ -503,6 +527,7 @@ function App() {
       ),
       disableBeacon: true,
       spotlightClicks: true,
+      styles: { tooltip: { maxWidth: 340 } },
     },
   ];
 
@@ -538,6 +563,26 @@ function App() {
             backgroundColor: '#fff',
             textColor: '#1e293b',
             arrowColor: '#fff',
+            borderRadius: 32,
+            boxShadow: '0 8px 32px 0 rgba(56,189,248,0.18)',
+            padding: '1.5rem',
+            width: 'auto',
+            minWidth: 220,
+            maxWidth: 360,
+          },
+          tooltip: {
+            borderRadius: 32,
+            boxShadow: '0 8px 32px 0 rgba(56,189,248,0.18)',
+            border: '2px solid #bae6fd',
+            background: 'linear-gradient(135deg, #fff 80%, #e0f2fe 100%)',
+            padding: '1.5rem',
+            minWidth: 220,
+            maxWidth: 360,
+          },
+          arrow: {
+            color: '#e0f2fe',
+            border: '2px solid #bae6fd',
+            filter: 'drop-shadow(0 2px 8px #38bdf855)',
           },
           buttonNext: {
             background: 'linear-gradient(90deg,#38bdf8,#6366f1)',
@@ -568,7 +613,28 @@ function App() {
           skip: 'Skip Tour',
           last: 'Finish',
         }}
+        showArrow
+        disableOverlayClose={false}
+        spotlightClicks={true}
+        tooltipComponent={undefined}
       />
+      {/* Custom cloud style for Joyride tooltip */}
+      <style>{`
+        .react-joyride__tooltip {
+          border-radius: 2rem !important;
+          box-shadow: 0 8px 32px 0 rgba(56,189,248,0.18) !important;
+          border: 2px solid #bae6fd !important;
+          background: linear-gradient(135deg, #fff 80%, #e0f2fe 100%) !important;
+          min-width: 220px !important;
+          max-width: 360px !important;
+          padding: 1.5rem !important;
+        }
+        .react-joyride__arrow {
+          color: #e0f2fe !important;
+          border: 2px solid #bae6fd !important;
+          filter: drop-shadow(0 2px 8px #38bdf855) !important;
+        }
+      `}</style>
       <div className="min-h-screen w-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 flex flex-col">
         <Routes>
           <Route path="/" element={<EntryScreen />} />
