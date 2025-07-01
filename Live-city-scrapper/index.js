@@ -47,6 +47,21 @@ app.get('/api/delhi-hospitals', async (req, res) => {
   }
 });
 
+app.get('/api/location', async (req, res) => {
+  const { city } = req.query;
+  try {
+    const response = await axios.get('https://nominatim.openstreetmap.org/search', {
+      params: { city, format: 'json', limit: 1 },
+      headers: {
+        'User-Agent': 'AvailItScraper/1.0 (your@email.com)'
+      }
+    });
+    res.json(response.data);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch location data' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Delhi Hospital Scraper running on port ${PORT}`);
 }); 
