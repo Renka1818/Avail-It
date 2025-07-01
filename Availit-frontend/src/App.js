@@ -20,7 +20,7 @@ function EntryScreen() {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700">
-      <img src="/availit-logo2.jpg" alt="AvailIt Logo" className="w-72 h-72 object-contain mb-10 mt-8 drop-shadow-2xl" />
+      <img src="/availit-logo2.JPG" alt="AvailIt Logo" className="w-72 h-72 object-contain mb-10 mt-8 drop-shadow-2xl" />
       <h1
         className="text-5xl md:text-7xl font-extrabold text-white mb-2 tracking-wide text-center drop-shadow-2xl animate-slidein"
         style={{
@@ -85,7 +85,7 @@ function RoleSelectPage() {
           />
         </svg>
         <img
-          src="/availit-logo2.jpg"
+          src="/availit-logo2.JPG"
           alt="AvailIt Logo"
           className="relative z-10 w-44 h-44 object-contain mx-auto bg-white rounded-xl shadow-xl border-4 border-blue-200"
           style={{ marginTop: '-30px' }}
