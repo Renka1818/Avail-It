@@ -84,7 +84,7 @@ node index.js
 
 ---
 
-## Hosting Suggestions (Free Tiers)
+## Hosted Platforms
 - [Railway](https://railway.app/)
 - [Render](https://render.com/)
 - [Fly.io](https://fly.io/)
