@@ -107,12 +107,38 @@ function RoleSelectPage() {
           }
         `}</style>
       </div>
-      <h2 className="text-3xl sm:text-4xl font-extrabold mb-3 text-center bg-gradient-to-r from-blue-500 via-cyan-400 to-green-400 bg-clip-text text-transparent drop-shadow-lg" style={{ fontFamily: 'Montserrat, Arial, sans-serif', letterSpacing: '0.04em' }}>
-        Welcome to AvailIt Hospital Availability
-      </h2>
-      <p className="text-lg sm:text-xl font-semibold text-center text-blue-900/90 mb-8" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
-        Real-time hospital bed tracking and management system
-      </p>
+      {/* Animated Welcome Message */}
+      <div className="w-full flex justify-center">
+        <div className="relative w-full max-w-xl mx-auto bg-white/80 rounded-2xl shadow-xl px-4 py-6 mt-2 mb-6 animate-slidein-left">
+          <h2 className="text-3xl sm:text-4xl font-extrabold mb-3 text-center text-gray-900 tracking-tight wave-text" style={{ fontFamily: 'Montserrat, Arial, sans-serif', letterSpacing: '0.04em' }}>
+            Welcome to <span className="inline-block">AvailIt Hospital Availability</span>
+          </h2>
+          <p className="text-lg sm:text-xl font-semibold text-center text-blue-900/90" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
+            Real-time hospital bed tracking and management system
+          </p>
+          <style>{`
+            @keyframes wave {
+              0%, 100% { transform: rotate(-2deg) scale(1.03); }
+              10% { transform: rotate(2deg) scale(1.04); }
+              20% { transform: rotate(-2deg) scale(1.03); }
+              30% { transform: rotate(2deg) scale(1.04); }
+              40% { transform: rotate(-2deg) scale(1.03); }
+              50% { transform: rotate(0deg) scale(1.05); }
+              60% { transform: rotate(2deg) scale(1.04); }
+              70% { transform: rotate(-2deg) scale(1.03); }
+              80% { transform: rotate(2deg) scale(1.04); }
+              90% { transform: rotate(-2deg) scale(1.03); }
+            }
+            .wave-text { animation: wave 2.5s infinite; }
+            @keyframes slidein-left {
+              0% { opacity: 0; transform: translateX(-100vw); }
+              80% { opacity: 1; transform: translateX(20px); }
+              100% { opacity: 1; transform: translateX(0); }
+            }
+            .animate-slidein-left { animation: slidein-left 1.2s cubic-bezier(0.77,0,0.175,1) 0.2s both; }
+          `}</style>
+        </div>
+      </div>
       <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6 mt-6 w-full max-w-xs sm:max-w-none mx-auto">
         <button
           className="w-full sm:w-auto px-8 py-3 rounded bg-purple-600 hover:bg-purple-700 text-white font-semibold text-lg transition shadow-lg"
