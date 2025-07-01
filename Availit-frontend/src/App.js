@@ -213,12 +213,7 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
       {/* Main nav actions (button bar) - hidden when menu is open */}
       {!menuOpen && (
         <div className="flex gap-3 md:gap-6 items-center flex-1 justify-center">
-          <button className="joyride-back min-w-[120px] px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onBack}>
-            <ArrowBackIcon fontSize="small" /> Back
-          </button>
-          <button className="min-w-[120px] px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onLogout} disabled={loading}>
-            <LogoutIcon fontSize="small" /> Logout
-          </button>
+          {/* All buttons removed from main nav bar; only hamburger and profile remain */}
         </div>
       )}
       {/* Hamburger dropdown (all screens) */}
