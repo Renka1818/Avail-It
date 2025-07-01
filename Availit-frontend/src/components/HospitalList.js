@@ -121,6 +121,7 @@ function HospitalList({ onEdit, refresh }) {
         <div className="relative bg-white rounded-2xl shadow-2xl p-2 w-[90vw] max-w-2xl h-[50vh] flex flex-col items-center justify-center animate-fade-in">
           <button
             className="absolute top-4 right-4 px-4 py-2 rounded-full bg-gradient-to-r from-blue-400 to-green-400 text-white font-bold text-2xl shadow-lg border-2 border-white focus:outline-none hover:bg-blue-500 hover:scale-105 transition"
+            style={{ zIndex: 1000 }}
             onClick={onClose}
             aria-label="Close map"
           >
