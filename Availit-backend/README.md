@@ -100,12 +100,3 @@ You can also use this file in Postman, Insomnia, or any OpenAPI-compatible tool.
 
 - `Backend`: All backend endpoints
 - `Frontend`: Endpoints used by the frontend (including scrapper)
-
-## Contributing
-1. Fork the repo
-2. Create a feature branch
-3. Make changes and add tests
-4. Submit a pull request
-
-## License
-MIT 
