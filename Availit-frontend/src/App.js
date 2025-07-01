@@ -601,27 +601,17 @@ function App() {
             border: '2px solid #bae6fd',
             filter: 'drop-shadow(0 2px 8px #38bdf855)',
           },
-          buttonNext: {
-            background: 'linear-gradient(90deg,#38bdf8,#6366f1)',
-            color: '#fff',
+          buttonClose: {
+            color: '#ef4444',
+            background: '#fff',
+            border: '2px solid #ef4444',
+            borderRadius: '50%',
             fontWeight: 'bold',
-            borderRadius: '9999px',
-            fontSize: '1rem',
-            padding: '0.5rem 1.5rem',
-            boxShadow: '0 2px 8px #38bdf855',
+            fontSize: '1.7rem',
+            width: '2.5rem',
+            height: '2.5rem',
+            boxShadow: '0 2px 8px #ef444455',
             transition: 'all 0.2s',
-            animation: 'pulse 1s infinite',
-          },
-          buttonSkip: {
-            background: 'linear-gradient(90deg,#f87171,#fbbf24)',
-            color: '#fff',
-            fontWeight: 'bold',
-            borderRadius: '9999px',
-            fontSize: '1rem',
-            padding: '0.5rem 1.5rem',
-            boxShadow: '0 2px 8px #f8717155',
-            transition: 'all 0.2s',
-            animation: 'pulse 1s infinite',
           },
         }}
         callback={handleJoyrideCallback}
@@ -634,8 +624,9 @@ function App() {
         disableOverlayClose={false}
         spotlightClicks={true}
         tooltipComponent={undefined}
+        showCloseButton={true}
       />
-      {/* Custom cloud style for Joyride tooltip */}
+      {/* Custom cloud style for Joyride tooltip and highlight close icon */}
       <style>{`
         .react-joyride__tooltip {
           border-radius: 2rem !important;
@@ -650,6 +641,25 @@ function App() {
           color: #e0f2fe !important;
           border: 2px solid #bae6fd !important;
           filter: drop-shadow(0 2px 8px #38bdf855) !important;
+        }
+        .react-joyride__close {
+          color: #ef4444 !important;
+          background: #fff !important;
+          border: 2px solid #ef4444 !important;
+          border-radius: 50% !important;
+          font-weight: bold !important;
+          font-size: 1.7rem !important;
+          width: 2.5rem !important;
+          height: 2.5rem !important;
+          box-shadow: 0 2px 8px #ef444455 !important;
+          transition: all 0.2s !important;
+        }
+        .react-joyride__close:hover {
+          background: #ef4444 !important;
+          color: #fff !important;
+          border-color: #ef4444 !important;
+          box-shadow: 0 4px 16px #ef4444aa !important;
+          transform: scale(1.1) !important;
         }
       `}</style>
       <div className="min-h-screen w-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 flex flex-col">
