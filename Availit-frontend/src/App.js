@@ -108,15 +108,15 @@ function RoleSelectPage() {
       </div>
       <h2 className="text-2xl font-bold mb-2 text-blue-800 drop-shadow-lg">Welcome to AvailIt Hospital Availability</h2>
       <p className="text-blue-700 mb-6 text-lg drop-shadow">Real-time hospital bed tracking and management system</p>
-      <div className="flex justify-center gap-6 mt-6">
+      <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6 mt-6 w-full max-w-xs sm:max-w-none mx-auto">
         <button
-          className="px-8 py-3 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg transition shadow-lg"
+          className="w-full sm:w-auto px-8 py-3 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg transition shadow-lg"
           onClick={() => handleSelect('admin')}
         >
           Login as Admin
         </button>
         <button
-          className="px-8 py-3 rounded bg-purple-600 hover:bg-purple-700 text-white font-semibold text-lg transition shadow-lg"
+          className="w-full sm:w-auto px-8 py-3 rounded bg-purple-600 hover:bg-purple-700 text-white font-semibold text-lg transition shadow-lg"
           onClick={() => handleSelect('user')}
         >
           Login as User
