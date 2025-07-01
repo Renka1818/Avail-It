@@ -253,10 +253,10 @@ function UserDashboard() {
   };
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-2 md:gap-4 mb-4 md:mb-8 mt-4 md:mt-6 items-stretch md:items-center w-full overflow-x-auto px-2">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-6 mb-4 md:mb-8 mt-4 md:mt-6 items-stretch md:items-center w-full overflow-x-auto px-2">
         <Tooltip title="Go back to home page" arrow>
           <button
-            className="w-full md:w-auto px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px]"
+            className="w-full md:w-auto min-w-[120px] px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px] text-base md:text-lg"
             onClick={handleBack}
           >
             <ArrowBackIcon fontSize="small" />
@@ -265,7 +265,7 @@ function UserDashboard() {
         </Tooltip>
         <Tooltip title="File a complaint about the system" arrow>
           <button
-            className="w-full md:w-auto px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px]"
+            className="w-full md:w-auto min-w-[120px] px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px] text-base md:text-lg"
             onClick={() => setShowComplaint(true)}
             disabled={complaintLoading}
           >
@@ -275,7 +275,7 @@ function UserDashboard() {
         </Tooltip>
         <Tooltip title="File a complaint against a hospital" arrow>
           <button
-            className="w-full md:w-auto px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px]"
+            className="w-full md:w-auto min-w-[120px] px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px] text-base md:text-lg"
             onClick={() => window.open('https://www.nmc.org.in/complaints/', '_blank')}
           >
             <ReportProblemIcon fontSize="small" />
@@ -284,7 +284,7 @@ function UserDashboard() {
         </Tooltip>
         <Tooltip title="Logout from your account" arrow>
           <button
-            className="w-full md:w-auto px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px]"
+            className="w-full md:w-auto min-w-[120px] px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px] text-base md:text-lg"
             onClick={handleLogout}
             disabled={logoutLoading}
           >
