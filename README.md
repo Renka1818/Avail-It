@@ -120,8 +120,3 @@ You can also use this file in Postman, Insomnia, or any OpenAPI-compatible tool.
 2. Create a feature branch
 3. Make changes and add tests
 4. Submit a pull request
-
----
-
-## License
-MIT or as specified in each subproject 
