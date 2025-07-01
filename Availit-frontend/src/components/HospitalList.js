@@ -10,6 +10,9 @@ import MuiCardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
 function HospitalList({ onEdit, refresh }) {
   const [hospitals, setHospitals] = useState([]);
@@ -89,6 +92,51 @@ function HospitalList({ onEdit, refresh }) {
         });
     }
   };
+
+  // Helper to extract city from address (simple split, can be improved)
+  function extractCity(address) {
+    if (!address) return '';
+    const parts = address.split(',');
+    return parts.length > 1 ? parts[parts.length - 1].trim() : address.trim();
+  }
+
+  function CityMap({ city }) {
+    const [coords, setCoords] = useState(null);
+    useEffect(() => {
+      if (!city) return;
+      fetch(`${process.env.REACT_APP_SCRAPPER_URL}/api/location?city=${encodeURIComponent(city)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.length > 0) {
+            setCoords({ lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) });
+          } else {
+            setCoords(null);
+          }
+        })
+        .catch(() => setCoords(null));
+    }, [city]);
+    if (!coords) return <div className="flex items-center justify-center h-32 text-xs text-gray-400">Map unavailable</div>;
+    return (
+      <MapContainer
+        center={[coords.lat, coords.lon]}
+        zoom={12}
+        style={{ height: '120px', width: '180px', borderRadius: '12px', boxShadow: '0 2px 12px #0001' }}
+        scrollWheelZoom={false}
+        dragging={false}
+        doubleClickZoom={false}
+        zoomControl={false}
+        attributionControl={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[coords.lat, coords.lon]} icon={L.icon({ iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', iconSize: [25, 41], iconAnchor: [12, 41] })}>
+          <Popup>{city}</Popup>
+        </Marker>
+      </MapContainer>
+    );
+  }
 
   if (loading) {
     return (
@@ -225,7 +273,13 @@ function HospitalList({ onEdit, refresh }) {
                         <span>{hospital.contactNumber}</span>
                       </Box>
                     </Grid>
-                    <Grid item xs={12} md={4} className="flex gap-2 justify-end">
+                    <Grid item xs={12} md={4} className="flex gap-2 justify-end items-center">
+                      <div className="hidden md:block">
+                        <CityMap city={extractCity(hospital.address)} />
+                      </div>
+                      <div className="md:hidden w-full mt-2">
+                        <CityMap city={extractCity(hospital.address)} />
+                      </div>
                       <Button
                         variant="outline"
                         size="sm"
