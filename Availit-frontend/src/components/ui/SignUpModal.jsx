@@ -10,8 +10,26 @@ const SignUpModal = ({ open, onClose, defaultRole }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [passwordStrength, setPasswordStrength] = useState('');
+  const [passwordStrengthColor, setPasswordStrengthColor] = useState('');
 
   if (!open) return null;
+
+  function getPasswordStrength(pw) {
+    if (!pw) return { label: '', color: '' };
+    const specialChar = /[!@#$%^&*(),.?":{}|<>]/;
+    if (pw.length < 6) return { label: 'Weak', color: 'text-red-500' };
+    if (!specialChar.test(pw)) return { label: 'Medium', color: 'text-yellow-500' };
+    if (pw.length >= 8 && specialChar.test(pw)) return { label: 'Strong', color: 'text-green-600' };
+    return { label: 'Medium', color: 'text-yellow-500' };
+  }
+
+  // Update password strength on change
+  React.useEffect(() => {
+    const { label, color } = getPasswordStrength(password);
+    setPasswordStrength(label);
+    setPasswordStrengthColor(color);
+  }, [password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +37,12 @@ const SignUpModal = ({ open, onClose, defaultRole }) => {
     setSuccess('');
     if (password !== confirmPassword) {
       setError('Passwords do not match');
+      return;
+    }
+    // Password validation
+    const { label } = getPasswordStrength(password);
+    if (label === 'Weak' || !label) {
+      setError('Password must be at least 6 characters and contain at least one special character.');
       return;
     }
     setLoading(true);
@@ -76,6 +100,9 @@ const SignUpModal = ({ open, onClose, defaultRole }) => {
               onChange={e => setPassword(e.target.value)}
               required
             />
+            {password && (
+              <div className={`mt-1 text-xs font-semibold ${passwordStrengthColor}`}>Password strength: {passwordStrength}</div>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Confirm Password</label>
