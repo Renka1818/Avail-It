@@ -199,25 +199,29 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
   };
 
   return (
-    <div ref={navRef} className="flex items-center justify-between w-full mb-4 md:mb-8 mt-4 md:mt-6 px-2 relative z-30">
-      {/* Hamburger menu - always visible */}
-      <button
-        className="joyride-hamburger flex items-center justify-center p-2 rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow border-2 border-white hover:scale-105 transition focus:outline-none"
-        onClick={handleMenuToggle}
-        aria-label="Open menu"
-        style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.12)' }}
-      >
-        <Menu className="h-8 w-8 text-white animate-bounce-short" />
-        <style>{`@keyframes bounce-short {0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}.animate-bounce-short{animation:bounce-short 1.2s infinite;}`}</style>
-      </button>
+    <div ref={navRef} className="relative flex items-center w-full mb-4 md:mb-8 mt-4 md:mt-6 px-2 z-30">
+      {/* Hamburger menu (left) */}
+      <div className="flex-shrink-0 w-14 flex items-center justify-start">
+        <button
+          className="joyride-hamburger flex items-center justify-center p-2 rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow border-2 border-white hover:scale-105 transition focus:outline-none"
+          onClick={handleMenuToggle}
+          aria-label="Open menu"
+          style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.12)' }}
+        >
+          <Menu className="h-8 w-8 text-white animate-bounce-short" />
+          <style>{`@keyframes bounce-short {0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}.animate-bounce-short{animation:bounce-short 1.2s infinite;}`}</style>
+        </button>
+      </div>
+
       {/* Centered Logo + App Name */}
-      <div className="flex-1 flex flex-col items-center justify-center">
+      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center">
         <div className="flex items-center gap-2 md:gap-3">
           <img src="/availit-logo.jpg" alt="AvailIt Logo" className="h-8 w-8 md:h-10 md:w-10 rounded-lg shadow bg-white/80 border border-blue-200" />
           <span className="font-extrabold text-xl md:text-3xl text-white tracking-wide drop-shadow-lg" style={{fontFamily: 'Montserrat, Arial, sans-serif', letterSpacing: '0.04em'}}>AvailIt</span>
         </div>
         <span className="text-xs md:text-base font-semibold text-white/90 mt-1 tracking-wide" style={{fontFamily: 'Montserrat, Arial, sans-serif', letterSpacing: '0.02em'}}>AvailIt - Available in Minutes</span>
       </div>
+
       {/* Main nav actions (button bar) - hidden when menu is open */}
       {!menuOpen && (
         <div className="flex gap-3 md:gap-6 items-center flex-1 justify-center">
@@ -243,10 +247,10 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
           </button>
         </div>
       )}
-      {/* Profile button (right) - more visible */}
-      <div className="relative flex items-center">
+      {/* Profile button (right) */}
+      <div className="flex-shrink-0 w-14 flex items-center justify-end ml-auto">
         <button
-          className="joyride-profile flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow-lg border-2 border-white hover:scale-105 transition p-2 ml-2"
+          className="joyride-profile flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow-lg border-2 border-white hover:scale-105 transition p-2"
           onClick={handleProfileToggle}
           aria-label="Profile"
           style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.18)' }}
