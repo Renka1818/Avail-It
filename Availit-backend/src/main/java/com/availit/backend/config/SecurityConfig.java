@@ -64,6 +64,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOrigin("https://avail-it.vercel.app");
+        config.addAllowedOrigin("https://avail-m7tfjcrr1-renukas-projects-d0f77529.vercel.app");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
