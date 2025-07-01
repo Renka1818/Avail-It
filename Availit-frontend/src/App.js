@@ -216,14 +216,6 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
           <button className="joyride-back min-w-[120px] px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onBack}>
             <ArrowBackIcon fontSize="small" /> Back
           </button>
-          <button className="joyride-complaint min-w-[120px] px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onComplaint} disabled={loading}>
-            <ReportIcon fontSize="small" /> File Complaint
-          </button>
-          {onHospitalComplaint && (
-            <button className="joyride-complaint-hospital min-w-[120px] px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onHospitalComplaint}>
-              <ReportProblemIcon fontSize="small" /> File Complaint Against Hospital
-            </button>
-          )}
           <button className="min-w-[120px] px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onLogout} disabled={loading}>
             <LogoutIcon fontSize="small" /> Logout
           </button>
