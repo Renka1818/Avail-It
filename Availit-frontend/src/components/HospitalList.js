@@ -165,7 +165,7 @@ function HospitalList({ onEdit, refresh }) {
     return (
       <>
         <button
-          className="w-full h-[56px] md:w-[120px] md:h-[80px] flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-blue-400 to-green-400 text-white font-bold shadow-md border border-gray-200 transition hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400 animate-fade-in"
+          className="show-map-btn w-full h-[56px] md:w-[120px] md:h-[80px] flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-blue-400 to-green-400 text-white font-bold shadow-md border border-gray-200 transition hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400 animate-fade-in"
           onClick={() => setModalOpen(true)}
           type="button"
           style={{ minWidth: '100px' }}
@@ -214,7 +214,7 @@ function HospitalList({ onEdit, refresh }) {
                 placeholder="Search hospitals by name or address..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="pl-10 border-2 border-gray-200 focus:border-indigo-400 focus:ring-indigo-400 transition-colors"
+                className="search-bar pl-10 border-2 border-gray-200 focus:border-indigo-400 focus:ring-indigo-400 transition-colors"
               />
             </div>
             <input
@@ -254,7 +254,7 @@ function HospitalList({ onEdit, refresh }) {
           </div>
         </div>
         {showStats && stats && (
-          <div className="mb-6 w-full overflow-x-auto">
+          <div className="mb-6 w-full overflow-x-auto statistics-bar">
             <div className="flex gap-4 md:grid md:grid-cols-6 md:gap-6 animate-fade-in">
               <div className="min-w-[160px] bg-gradient-to-br from-blue-400 to-blue-600 text-white rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
                 <Activity className="h-7 w-7 mb-1 animate-pulse" />
@@ -307,7 +307,7 @@ function HospitalList({ onEdit, refresh }) {
         ) : (
           <div className="grid gap-6">
             {filtered.map(hospital => (
-              <MuiCard key={hospital.id} className="!rounded-2xl !shadow-lg !mb-6 !border !border-gray-100 hover:!shadow-2xl transition-shadow duration-200">
+              <MuiCard key={hospital.id} className="hospital-card !rounded-2xl !shadow-lg !mb-6 !border !border-gray-100 hover:!shadow-2xl transition-shadow duration-200">
                 <MuiCardContent>
                   <Grid container spacing={2} alignItems="center" justifyContent="space-between">
                     <Grid item xs={12} md={8}>

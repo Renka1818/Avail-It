@@ -16,6 +16,7 @@ import 'react-awesome-button/dist/styles.css';
 import Tooltip from '@mui/material/Tooltip';
 import ConfirmationDialog from './components/ui/ConfirmationDialog';
 import { Menu, User as UserIcon } from 'lucide-react';
+import Joyride, { STATUS } from 'react-joyride';
 
 function EntryScreen() {
   const navigate = useNavigate();
@@ -412,11 +413,162 @@ function UserDashboard() {
 
 function App() {
   const navigate = useNavigate();
-  const handleBack = () => {
-    navigate('/');
+  const [runTour, setRunTour] = useState(false);
+  const [tourStepIndex, setTourStepIndex] = useState(0);
+  const tourSteps = [
+    {
+      target: 'body',
+      placement: 'center',
+      content: (
+        <div className="text-lg font-bold text-blue-900">Welcome to AvailIt!<br/>Let us show you around.<br/><span className='text-base font-normal text-gray-700'>(You can skip anytime)</span></div>
+      ),
+      disableBeacon: true,
+      spotlightClicks: true,
+    },
+    {
+      target: '.animate-slidein',
+      content: 'This is the main slogan and entry point. Click Get Started to begin!',
+      placement: 'bottom',
+    },
+    {
+      target: '.bg-white/80',
+      content: 'Here is the welcome message and app description.',
+      placement: 'bottom',
+    },
+    {
+      target: '.bg-purple-600',
+      content: 'Login as a User to search for hospitals and availability.',
+      placement: 'top',
+    },
+    {
+      target: '.bg-blue-600',
+      content: 'Login as an Admin to manage hospital data.',
+      placement: 'top',
+    },
+    {
+      target: '.flex.items-center.justify-between.w-full.mb-4',
+      content: 'This is the navigation bar. Use the hamburger menu and profile button for navigation and account actions.',
+      placement: 'bottom',
+    },
+    {
+      target: '.bg-gradient-to-br.from-blue-400.to-green-400',
+      content: 'This is your profile button. Click to view your info or logout.',
+      placement: 'left',
+    },
+    {
+      target: '.min-w-[120px].bg-blue-500',
+      content: 'Use this button to go back to the previous page.',
+      placement: 'bottom',
+    },
+    {
+      target: '.min-w-[120px].bg-red-600',
+      content: 'File a complaint if you face any issues.',
+      placement: 'bottom',
+    },
+    {
+      target: '.min-w-[120px].bg-yellow-500',
+      content: 'File a complaint against a hospital (User only).',
+      placement: 'bottom',
+    },
+    {
+      target: '.min-w-[120px].bg-indigo-600',
+      content: 'Logout from your account.',
+      placement: 'bottom',
+    },
+    {
+      target: '.statistics-bar',
+      content: 'This bar shows live statistics for hospitals and beds.',
+      placement: 'bottom',
+    },
+    {
+      target: '.hospital-card',
+      content: 'Each card shows a hospital. Click Show Map to view its location.',
+      placement: 'top',
+    },
+    {
+      target: '.show-map-btn',
+      content: 'Click here to view the hospital on a map.',
+      placement: 'left',
+    },
+    {
+      target: '.search-bar',
+      content: 'Use this to search for hospitals by name, city, or type.',
+      placement: 'bottom',
+    },
+    {
+      target: 'body',
+      placement: 'center',
+      content: (
+        <div className="text-lg font-bold text-blue-900">That concludes the tour!<br/>You can revisit it anytime from the profile menu.<br/>Enjoy using AvailIt!</div>
+      ),
+      disableBeacon: true,
+      spotlightClicks: true,
+    },
+  ];
+
+  useEffect(() => {
+    if (!localStorage.getItem('availit_tour_done')) {
+      setRunTour(true);
+    }
+  }, []);
+
+  const handleJoyrideCallback = (data) => {
+    const { status, index, type } = data;
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setRunTour(false);
+      localStorage.setItem('availit_tour_done', '1');
+    }
+    setTourStepIndex(index);
   };
+
   return (
     <>
+      <Joyride
+        steps={tourSteps}
+        run={runTour}
+        stepIndex={tourStepIndex}
+        continuous
+        showSkipButton
+        showProgress
+        disableScrolling={false}
+        styles={{
+          options: {
+            zIndex: 9999,
+            primaryColor: '#2563eb',
+            backgroundColor: '#fff',
+            textColor: '#1e293b',
+            arrowColor: '#fff',
+          },
+          buttonNext: {
+            background: 'linear-gradient(90deg,#38bdf8,#6366f1)',
+            color: '#fff',
+            fontWeight: 'bold',
+            borderRadius: '9999px',
+            fontSize: '1rem',
+            padding: '0.5rem 1.5rem',
+            boxShadow: '0 2px 8px #38bdf855',
+            transition: 'all 0.2s',
+            animation: 'pulse 1s infinite',
+          },
+          buttonSkip: {
+            background: 'linear-gradient(90deg,#f87171,#fbbf24)',
+            color: '#fff',
+            fontWeight: 'bold',
+            borderRadius: '9999px',
+            fontSize: '1rem',
+            padding: '0.5rem 1.5rem',
+            boxShadow: '0 2px 8px #f8717155',
+            transition: 'all 0.2s',
+            animation: 'pulse 1s infinite',
+          },
+        }}
+        callback={handleJoyrideCallback}
+        locale={{
+          next: 'Next →',
+          skip: 'Skip Tour',
+          last: 'Finish',
+        }}
+      />
       <div className="min-h-screen w-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 flex flex-col">
         <Routes>
           <Route path="/" element={<EntryScreen />} />
