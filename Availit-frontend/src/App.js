@@ -106,20 +106,24 @@ function RoleSelectPage() {
           }
         `}</style>
       </div>
-      <h2 className="text-2xl font-bold mb-2 text-blue-800 drop-shadow-lg">Welcome to AvailIt Hospital Availability</h2>
-      <p className="text-blue-700 mb-6 text-lg drop-shadow">Real-time hospital bed tracking and management system</p>
+      <h2 className="text-3xl sm:text-4xl font-extrabold mb-3 text-center bg-gradient-to-r from-blue-500 via-cyan-400 to-green-400 bg-clip-text text-transparent drop-shadow-lg" style={{ fontFamily: 'Montserrat, Arial, sans-serif', letterSpacing: '0.04em' }}>
+        Welcome to AvailIt Hospital Availability
+      </h2>
+      <p className="text-lg sm:text-xl font-semibold text-center text-blue-900/90 mb-8" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
+        Real-time hospital bed tracking and management system
+      </p>
       <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6 mt-6 w-full max-w-xs sm:max-w-none mx-auto">
-        <button
-          className="w-full sm:w-auto px-8 py-3 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg transition shadow-lg"
-          onClick={() => handleSelect('admin')}
-        >
-          Login as Admin
-        </button>
         <button
           className="w-full sm:w-auto px-8 py-3 rounded bg-purple-600 hover:bg-purple-700 text-white font-semibold text-lg transition shadow-lg"
           onClick={() => handleSelect('user')}
         >
           Login as User
+        </button>
+        <button
+          className="w-full sm:w-auto px-8 py-3 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg transition shadow-lg"
+          onClick={() => handleSelect('admin')}
+        >
+          Login as Admin
         </button>
       </div>
       <LoginModal open={modalOpen} onClose={() => setModalOpen(false)} role={selectedRole} />

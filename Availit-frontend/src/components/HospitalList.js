@@ -115,26 +115,30 @@ function HospitalList({ onEdit, refresh }) {
         })
         .catch(() => setCoords(null));
     }, [city]);
-    if (!coords) return <div className="flex items-center justify-center h-32 text-xs text-gray-400">Map unavailable</div>;
+    if (!coords) return (
+      <div className="flex items-center justify-center rounded-xl border border-gray-200 bg-white text-xs text-gray-400 shadow-md w-full h-[120px] md:w-[120px] md:h-[80px]">Map unavailable</div>
+    );
     return (
-      <MapContainer
-        center={[coords.lat, coords.lon]}
-        zoom={12}
-        style={{ height: '120px', width: '180px', borderRadius: '12px', boxShadow: '0 2px 12px #0001' }}
-        scrollWheelZoom={false}
-        dragging={false}
-        doubleClickZoom={false}
-        zoomControl={false}
-        attributionControl={false}
-      >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Marker position={[coords.lat, coords.lon]} icon={L.icon({ iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', iconSize: [25, 41], iconAnchor: [12, 41] })}>
-          <Popup>{city}</Popup>
-        </Marker>
-      </MapContainer>
+      <div className="rounded-xl border border-gray-200 bg-white shadow-md overflow-hidden flex items-center justify-center w-full h-[120px] md:w-[120px] md:h-[80px]">
+        <MapContainer
+          center={[coords.lat, coords.lon]}
+          zoom={12}
+          style={{ width: '100%', height: '100%' }}
+          scrollWheelZoom={false}
+          dragging={false}
+          doubleClickZoom={false}
+          zoomControl={false}
+          attributionControl={false}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={[coords.lat, coords.lon]} icon={L.icon({ iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', iconSize: [25, 41], iconAnchor: [12, 41] })}>
+            <Popup>{city}</Popup>
+          </Marker>
+        </MapContainer>
+      </div>
     );
   }
 
@@ -274,10 +278,10 @@ function HospitalList({ onEdit, refresh }) {
                       </Box>
                     </Grid>
                     <Grid item xs={12} md={4} className="flex gap-2 justify-end items-center">
-                      <div className="hidden md:block">
+                      <div className="hidden md:flex items-center justify-center h-[80px] w-[120px]">
                         <CityMap city={extractCity(hospital.address)} />
                       </div>
-                      <div className="md:hidden w-full mt-2">
+                      <div className="md:hidden w-full mt-2 flex items-center justify-center">
                         <CityMap city={extractCity(hospital.address)} />
                       </div>
                       <Button
