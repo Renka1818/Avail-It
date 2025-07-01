@@ -14,7 +14,6 @@ const LIVE_DATA_SOURCES = {
     fetch: getDelhiHospitalsLive,
     label: 'Delhi',
   },
-  // Add more cities and their fetch functions here in the future
 };
 
 function UserHospitalSearch({ showLiveDataToast }) {
@@ -70,7 +69,6 @@ function UserHospitalSearch({ showLiveDataToast }) {
     if (stored) setRecentCities(JSON.parse(stored));
   }, [username]);
 
-  // Show toast on login
   useEffect(() => {
     if (showLiveDataToast) {
       toast({
@@ -92,7 +90,7 @@ function UserHospitalSearch({ showLiveDataToast }) {
     const cityKey = cityName.trim().toLowerCase();
     if (LIVE_DATA_SOURCES[cityKey]) {
       LIVE_DATA_SOURCES[cityKey].fetch().then(data => {
-        // Map live data fields to expected structure
+
         const mapped = Array.isArray(data)
           ? data.map(h => ({
               hospitalName: h.hospitalName || h.name || '',
@@ -147,13 +145,13 @@ function UserHospitalSearch({ showLiveDataToast }) {
     setShowCitySuggestions(true);
   };
 
-  // Helper to check if there is unsaved work or filters
+ 
   const hasUnsavedWorkOrFilters = () => {
     return search.trim() !== '';
-    // Extend this check if you add more unsaved work logic
+
   };
 
-  // Modified city select handler with confirmation
+
   const handleCitySelect = async (selectedCity) => {
     if (hasUnsavedWorkOrFilters()) {
       setPendingCity(selectedCity);
@@ -163,14 +161,13 @@ function UserHospitalSearch({ showLiveDataToast }) {
     await doCityChange(selectedCity);
   };
 
-  // Actually perform the city change
+
   const doCityChange = async (selectedCity) => {
     setCity(selectedCity);
     setCityQuery(selectedCity);
     setShowCitySuggestions(false);
     setChangingCity(false);
     setLoading(true);
-    // Update recent cities
     let updatedRecent = [selectedCity, ...recentCities.filter(c => c !== selectedCity)].slice(0, 5);
     setRecentCities(updatedRecent);
     localStorage.setItem('recentCities', JSON.stringify(updatedRecent));
@@ -180,7 +177,7 @@ function UserHospitalSearch({ showLiveDataToast }) {
     setPendingCity(null);
   };
 
-  // Handler for confirmation dialog
+
   const handleCityConfirm = (confirm) => {
     if (confirm && pendingCity) {
       doCityChange(pendingCity);
@@ -190,17 +187,14 @@ function UserHospitalSearch({ showLiveDataToast }) {
     }
   };
 
-  // Geolocation suggestion when changing city
   useEffect(() => {
     if (changingCity) {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async (pos) => {
           const { latitude, longitude } = pos.coords;
           try {
-            // Use Nominatim reverse geocoding
             const res = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
             const data = await res.json();
-            // Try to extract city from address
             const cityName = data.address.city || data.address.town || data.address.village || data.address.state_district || data.address.state;
             if (cityName) setGeoCity(cityName);
           } catch (e) {
@@ -217,8 +211,6 @@ function UserHospitalSearch({ showLiveDataToast }) {
       setGeoError(null);
     }
   }, [changingCity]);
-
-  // Geocode city to coordinates when city changes
   useEffect(() => {
     if (!city) {
       setCityCoords(null);
@@ -226,7 +218,6 @@ function UserHospitalSearch({ showLiveDataToast }) {
     }
     setCoordsLoading(true);
     setCoordsError(null);
-    // Use scrapper to geocode city name
     fetch(`${process.env.REACT_APP_SCRAPPER_URL}/api/location?city=${encodeURIComponent(city)}`)
       .then(res => res.json())
       .then(data => {
@@ -257,7 +248,6 @@ function UserHospitalSearch({ showLiveDataToast }) {
     return 'text-red-600 bg-red-100';
   };
 
-  // Statistics calculation
   const stats = React.useMemo(() => {
     if (!hospitals.length) return null;
     let totalBeds = 0, availableBeds = 0, icuBeds = 0, ventilators = 0, oxygenHospitals = 0;
@@ -278,7 +268,6 @@ function UserHospitalSearch({ showLiveDataToast }) {
     };
   }, [hospitals]);
 
-  // Add this component to recenter the map when city changes
   function RecenterMap({ lat, lon }) {
     const map = useMap();
     useEffect(() => {
@@ -335,7 +324,7 @@ function UserHospitalSearch({ showLiveDataToast }) {
     );
   }
 
-  // Optionally, restore isLiveCity for UI
+
   const isLiveCity = LIVE_DATA_SOURCES[city.trim().toLowerCase()] !== undefined;
 
   if (cityPrompt) {

@@ -94,7 +94,6 @@ function HospitalList({ onEdit, refresh }) {
     }
   };
 
-  // Helper to extract city from address (simple split, can be improved)
   function extractCity(address) {
     if (!address) return '';
     const parts = address.split(',');
@@ -120,6 +119,13 @@ function HospitalList({ onEdit, refresh }) {
     return ReactDOM.createPortal(
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
         <div className="relative bg-white rounded-2xl shadow-2xl p-2 w-[90vw] max-w-2xl h-[50vh] flex flex-col items-center justify-center animate-fade-in">
+          <button
+            className="absolute top-4 right-4 px-4 py-2 rounded-full bg-gradient-to-r from-blue-400 to-green-400 text-white font-bold text-2xl shadow-lg border-2 border-white focus:outline-none hover:bg-blue-500 hover:scale-105 transition"
+            onClick={onClose}
+            aria-label="Close map"
+          >
+            ×
+          </button>
           {coords ? (
             <MapContainer
               center={[coords.lat, coords.lon]}
@@ -142,18 +148,6 @@ function HospitalList({ onEdit, refresh }) {
           ) : (
             <div className="flex items-center justify-center w-full h-full text-gray-400 text-lg">Map unavailable</div>
           )}
-          <button
-            className="absolute top-4 right-4 px-6 py-3 rounded-full bg-gradient-to-r from-blue-400 to-green-400 text-white font-bold text-lg shadow-lg border-2 border-white animate-wave focus:outline-none"
-            onClick={onClose}
-          >
-            Hide Map
-            <style>{`
-              @keyframes wave {0%,100%{transform:scale(1);}50%{transform:scale(1.08) rotate(-2deg);}}
-              .animate-wave {animation: wave 1.2s infinite;}
-              @keyframes fade-in {from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
-              .animate-fade-in {animation: fade-in 0.4s cubic-bezier(0.77,0,0.175,1) both;}
-            `}</style>
-          </button>
         </div>
       </div>,
       document.body

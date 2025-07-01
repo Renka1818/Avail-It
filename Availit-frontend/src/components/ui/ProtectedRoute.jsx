@@ -11,7 +11,6 @@ const ProtectedRoute = ({ children, role }) => {
     return <Navigate to="/role" replace />;
   }
   if (role && userRole !== role) {
-    // If role mismatch, redirect to correct dashboard
     if (userRole === 'ADMIN') return <Navigate to="/admin/dashboard" replace />;
     if (userRole === 'USER') return <Navigate to="/user/dashboard" replace />;
     return <Navigate to="/role" replace />;

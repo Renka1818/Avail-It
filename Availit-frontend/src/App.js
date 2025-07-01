@@ -162,12 +162,12 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const navRef = useRef();
-  // Get user info from local/session storage
+
   const username = localStorage.getItem('username') || sessionStorage.getItem('username');
   const city = localStorage.getItem('city') || sessionStorage.getItem('city');
   const userRole = localStorage.getItem('role') || sessionStorage.getItem('role') || role;
 
-  // Close menus on outside click/touch
+
   useEffect(() => {
     function handleClick(e) {
       if (!navRef.current) return;
@@ -184,7 +184,6 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
     };
   }, []);
 
-  // Only one menu open at a time
   const handleMenuToggle = () => {
     setMenuOpen(o => {
       if (!o) setProfileOpen(false);
@@ -307,8 +306,6 @@ function AdminDashboard() {
     setTimeout(() => {
       setComplaintLoading(false);
       setShowComplaint(false);
-      // You can add toast or API call here
-      console.log('Admin complaint:', complaint);
     }, 2000);
   };
   return (
@@ -380,8 +377,6 @@ function UserDashboard() {
     setTimeout(() => {
       setComplaintLoading(false);
       setShowComplaint(false);
-      // You can add toast or API call here
-      console.log('User complaint:', complaint);
     }, 2000);
   };
   return (

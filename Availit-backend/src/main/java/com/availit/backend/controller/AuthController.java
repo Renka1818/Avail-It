@@ -37,7 +37,6 @@ public class AuthController {
     )
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
-        System.out.println("Received registration: username=" + request.getUsername() + ", password=" + request.getPassword() + ", role=" + request.getRole());
         try {
             User user = userService.registerUser(request.getUsername(), request.getPassword(), request.getRole());
             return ResponseEntity.ok(Map.of("message", "User registered successfully"));
@@ -75,7 +74,6 @@ public class AuthController {
 
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers() {
-        // Only return username and role, not password
         var users = userService.getAllUsers().stream()
             .map(user -> Map.of(
                 "id", user.getId(),

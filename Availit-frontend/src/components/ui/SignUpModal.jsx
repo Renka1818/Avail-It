@@ -22,7 +22,6 @@ const SignUpModal = ({ open, onClose, defaultRole }) => {
     return { label: 'Medium', color: 'text-yellow-500' };
   }
 
-  // Update password strength on change
   React.useEffect(() => {
     const { label, color } = getPasswordStrength(password);
     setPasswordStrength(label);
@@ -39,7 +38,7 @@ const SignUpModal = ({ open, onClose, defaultRole }) => {
       setError('Passwords do not match');
       return;
     }
-    // Password validation
+
     const { label } = getPasswordStrength(password);
     if (label === 'Weak' || !label) {
       setError('Password must be at least 6 characters and contain at least one special character.');

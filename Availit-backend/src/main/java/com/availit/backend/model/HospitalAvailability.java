@@ -50,7 +50,6 @@ public class HospitalAvailability {
     @JoinColumn(name = "hospital_id")
     private List<Location> locations;
 
-    // Constructors
     public HospitalAvailability() {}
 
     public HospitalAvailability(String hospitalName, int totalBeds, int availableBeds, boolean oxygenAvailable, String address, String contactNumber, int icuBeds, int ventilators) {
@@ -64,7 +63,7 @@ public class HospitalAvailability {
         this.ventilators = ventilators;
     }
 
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }

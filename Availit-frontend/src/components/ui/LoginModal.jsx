@@ -29,7 +29,6 @@ const LoginModal = ({ open, onClose, role }) => {
         storage.setItem('token', data.token);
         storage.setItem('username', data.username);
         storage.setItem('role', data.role);
-        // Remove from the other storage to avoid conflicts
         (keepSignedIn ? sessionStorage : localStorage).removeItem('token');
         (keepSignedIn ? sessionStorage : localStorage).removeItem('username');
         (keepSignedIn ? sessionStorage : localStorage).removeItem('role');

@@ -26,7 +26,6 @@ public class Location {
     @Size(min = 4, max = 10)
     private String zipCode;
 
-    // Getters and setters
     public Long getId() { return id; }
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }

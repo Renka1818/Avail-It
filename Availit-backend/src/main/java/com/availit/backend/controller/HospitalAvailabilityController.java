@@ -193,7 +193,6 @@ public class HospitalAvailabilityController {
         }
     }
 
-    // PUBLIC ENDPOINT for user-facing search
     @GetMapping("/public/hospitals")
     @Operation(
         summary = "Get all hospitals (public)",
