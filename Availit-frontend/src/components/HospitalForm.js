@@ -207,8 +207,9 @@ function HospitalForm({ editing, onSuccess, onCancel }) {
             </Label>
           </div>
 
-          <div className="flex gap-4 pt-4">
-            <Button type="submit" className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg">
+          <div className="flex gap-4 pt-4 flex-col sm:flex-row">
+            <Button type="submit" className="w-full sm:w-auto bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400 hover:from-teal-500 hover:to-blue-500 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 shadow-lg flex items-center justify-center gap-2 animate-gradient-move hover:animate-bounce-short focus:scale-105 focus:outline-none focus:ring-2 focus:ring-cyan-400">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
               {editing ? 'Update Hospital' : 'Create Hospital'}
             </Button>
             {editing && (
@@ -216,7 +217,7 @@ function HospitalForm({ editing, onSuccess, onCancel }) {
                 type="button" 
                 variant="outline" 
                 onClick={onCancel}
-                className="border-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-3 rounded-lg font-semibold transition-all duration-200"
+                className="w-full sm:w-auto border-2 border-gray-300 text-gray-700 hover:bg-gray-50 px-8 py-3 rounded-lg font-semibold transition-all duration-200"
               >
                 Cancel
               </Button>
@@ -229,3 +230,22 @@ function HospitalForm({ editing, onSuccess, onCancel }) {
 }
 
 export default HospitalForm;
+
+<style jsx>{`
+@keyframes gradient-move {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient-move {
+  background-size: 200% 200%;
+  animation: gradient-move 2.5s ease-in-out infinite;
+}
+@keyframes bounce-short {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+.animate-bounce-short:hover {
+  animation: bounce-short 0.3s;
+}
+`}</style>
