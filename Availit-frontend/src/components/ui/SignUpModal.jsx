@@ -13,8 +13,6 @@ const SignUpModal = ({ open, onClose, defaultRole }) => {
   const [passwordStrength, setPasswordStrength] = useState('');
   const [passwordStrengthColor, setPasswordStrengthColor] = useState('');
 
-  if (!open) return null;
-
   function getPasswordStrength(pw) {
     if (!pw) return { label: '', color: '' };
     const specialChar = /[!@#$%^&*(),.?":{}|<>]/;
@@ -30,6 +28,8 @@ const SignUpModal = ({ open, onClose, defaultRole }) => {
     setPasswordStrength(label);
     setPasswordStrengthColor(color);
   }, [password]);
+
+  if (!open) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
