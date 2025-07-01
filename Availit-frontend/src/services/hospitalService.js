@@ -2,9 +2,10 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL + '/api/hospitals';
 const AUTH_URL = process.env.REACT_APP_BACKEND_URL + '/api/auth';
+console.log('process.env.REACT_APP_SCRAPPER_URL:', process.env.REACT_APP_SCRAPPER_URL);
 const SCRAPPER_URL = process.env.REACT_APP_SCRAPPER_URL;
+console.log('SCRAPPER_URL:', SCRAPPER_URL);
 
-// Set up axios interceptor to attach JWT
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');
