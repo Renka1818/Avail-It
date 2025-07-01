@@ -92,6 +92,7 @@ const SignUpModal = ({ open, onClose, defaultRole }) => {
           </div>
           <div>
             <label className="block text-sm font-medium mb-1">Password</label>
+            <div className="text-xs text-gray-500 mb-1">Password should be at least 6 characters long and must contain at least one special character.</div>
             <input
               type="password"
               className="w-full border rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-400"
