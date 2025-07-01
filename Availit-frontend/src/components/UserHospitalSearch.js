@@ -397,7 +397,13 @@ function UserHospitalSearch({ showLiveDataToast }) {
             <path stroke="#fff" strokeWidth="2" d="M8 12l2 2 4-4" />
           </svg>
           <span className="font-semibold">Live data is available for <span className="underline">Delhi</span>! Switch to Delhi city for real-time hospital info.</span>
-          <button onClick={() => setShowBanner(false)} className="ml-2 text-green-700 hover:text-green-900 text-xl font-bold focus:outline-none">&times;</button>
+          <button
+            onClick={() => setShowBanner(false)}
+            className="ml-2 text-green-700 hover:text-white hover:bg-green-500 focus:bg-green-600 focus:text-white text-2xl font-extrabold rounded-full w-9 h-9 flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-green-400 transition-all duration-150"
+            aria-label="Close live data banner"
+          >
+            &times;
+          </button>
         </div>
       )}
       {/* City Change Confirmation Dialog (always overlays UI) */}
