@@ -8,6 +8,7 @@ import { Checkbox } from '../components/ui/checkbox';
 import { Bed, MapPin, Phone, Users, Stethoscope } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 
+
 const initialState = {
   hospitalName: '',
   totalBeds: 0,
