@@ -2,7 +2,7 @@
 
 A full-stack platform for managing and viewing hospital bed and oxygen availability.
 
-## Live Demo
+## Try It Live
 [https://avail-it.vercel.app/](https://avail-it.vercel.app/)
 
 ## Project Structure
