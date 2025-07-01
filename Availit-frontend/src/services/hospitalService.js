@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL + '/api/hospitals';
 const AUTH_URL = process.env.REACT_APP_BACKEND_URL + '/api/auth';
-const SCRAPPER_URL = process.env.REACT_APP_SCRAPPER_URL + '/api';
+const SCRAPPER_URL = process.env.REACT_APP_SCRAPPER_URL;
 
 // Set up axios interceptor to attach JWT
 axios.interceptors.request.use(
@@ -55,5 +55,5 @@ export function getAllCities() {
 }
 
 export function getDelhiHospitalsLive() {
-  return fetch(`${SCRAPPER_URL}/delhi-hospitals`).then(res => res.json());
+  return fetch(`${SCRAPPER_URL}/api/delhi-hospitals`).then(res => res.json());
 } 
