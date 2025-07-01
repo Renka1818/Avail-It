@@ -13,6 +13,7 @@ import Box from '@mui/material/Box';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import ReactDOM from 'react-dom';
 
 function HospitalList({ onEdit, refresh }) {
   const [hospitals, setHospitals] = useState([]);
@@ -100,11 +101,10 @@ function HospitalList({ onEdit, refresh }) {
     return parts.length > 1 ? parts[parts.length - 1].trim() : address.trim();
   }
 
-  function CityMapToggle({ city }) {
-    const [showMap, setShowMap] = useState(false);
+  function CityMapModal({ city, open, onClose }) {
     const [coords, setCoords] = useState(null);
     useEffect(() => {
-      if (!showMap || !city) return;
+      if (!open || !city) return;
       fetch(`${process.env.REACT_APP_SCRAPPER_URL}/api/location?city=${encodeURIComponent(city)}`)
         .then(res => res.json())
         .then(data => {
@@ -115,13 +115,58 @@ function HospitalList({ onEdit, refresh }) {
           }
         })
         .catch(() => setCoords(null));
-    }, [showMap, city]);
+    }, [open, city]);
+    if (!open) return null;
+    return ReactDOM.createPortal(
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+        <div className="relative bg-white rounded-2xl shadow-2xl p-2 w-[90vw] max-w-2xl h-[50vh] flex flex-col items-center justify-center animate-fade-in">
+          {coords ? (
+            <MapContainer
+              center={[coords.lat, coords.lon]}
+              zoom={12}
+              style={{ width: '100%', height: '100%', borderRadius: '1rem' }}
+              scrollWheelZoom={false}
+              dragging={false}
+              doubleClickZoom={false}
+              zoomControl={false}
+              attributionControl={false}
+            >
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              <Marker position={[coords.lat, coords.lon]} icon={L.icon({ iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', iconSize: [25, 41], iconAnchor: [12, 41] })}>
+                <Popup>{city}</Popup>
+              </Marker>
+            </MapContainer>
+          ) : (
+            <div className="flex items-center justify-center w-full h-full text-gray-400 text-lg">Map unavailable</div>
+          )}
+          <button
+            className="absolute top-4 right-4 px-6 py-3 rounded-full bg-gradient-to-r from-blue-400 to-green-400 text-white font-bold text-lg shadow-lg border-2 border-white animate-wave focus:outline-none"
+            onClick={onClose}
+          >
+            Hide Map
+            <style>{`
+              @keyframes wave {0%,100%{transform:scale(1);}50%{transform:scale(1.08) rotate(-2deg);}}
+              .animate-wave {animation: wave 1.2s infinite;}
+              @keyframes fade-in {from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
+              .animate-fade-in {animation: fade-in 0.4s cubic-bezier(0.77,0,0.175,1) both;}
+            `}</style>
+          </button>
+        </div>
+      </div>,
+      document.body
+    );
+  }
 
-    if (!showMap) {
-      return (
+  function CityMapToggle({ city }) {
+    const [modalOpen, setModalOpen] = useState(false);
+    return (
+      <>
         <button
           className="w-full h-[56px] md:w-[120px] md:h-[80px] flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-blue-400 to-green-400 text-white font-bold shadow-md border border-gray-200 transition hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400 animate-fade-in"
-          onClick={() => setShowMap(true)}
+          onClick={() => setModalOpen(true)}
           type="button"
           style={{ minWidth: '100px' }}
         >
@@ -134,49 +179,8 @@ function HospitalList({ onEdit, refresh }) {
             .animate-fade-in { animation: fade-in 0.5s cubic-bezier(0.77,0,0.175,1) both; }
           `}</style>
         </button>
-      );
-    }
-
-    if (!coords) {
-      return (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white text-xs text-gray-400 shadow-md w-full h-[120px] md:w-[120px] md:h-[80px] mx-4 my-2 md:mx-0 md:ml-4 md:my-0 p-4">
-          Map unavailable
-          <button
-            className="mt-2 px-3 py-1 rounded bg-gradient-to-r from-blue-400 to-green-400 text-white font-semibold text-xs shadow hover:scale-105 transition"
-            onClick={() => setShowMap(false)}
-          >
-            Hide Map
-          </button>
-        </div>
-      );
-    }
-    return (
-      <div className="rounded-xl border border-gray-200 bg-white shadow-md overflow-hidden flex flex-col items-center justify-center w-full h-[120px] md:w-[120px] md:h-[80px] mx-4 my-2 md:mx-0 md:ml-4 md:my-0 p-1">
-        <MapContainer
-          center={[coords.lat, coords.lon]}
-          zoom={12}
-          style={{ width: '100%', height: '100%' }}
-          scrollWheelZoom={false}
-          dragging={false}
-          doubleClickZoom={false}
-          zoomControl={false}
-          attributionControl={false}
-        >
-          <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
-          <Marker position={[coords.lat, coords.lon]} icon={L.icon({ iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png', iconSize: [25, 41], iconAnchor: [12, 41] })}>
-            <Popup>{city}</Popup>
-          </Marker>
-        </MapContainer>
-        <button
-          className="mt-2 px-3 py-1 rounded bg-gradient-to-r from-blue-400 to-green-400 text-white font-semibold text-xs shadow hover:scale-105 transition"
-          onClick={() => setShowMap(false)}
-        >
-          Hide Map
-        </button>
-      </div>
+        <CityMapModal city={city} open={modalOpen} onClose={() => setModalOpen(false)} />
+      </>
     );
   }
 
