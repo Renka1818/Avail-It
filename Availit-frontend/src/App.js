@@ -15,6 +15,7 @@ import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import Tooltip from '@mui/material/Tooltip';
 import ConfirmationDialog from './components/ui/ConfirmationDialog';
+import { Menu, User as UserIcon } from 'lucide-react';
 
 function EntryScreen() {
   const navigate = useNavigate();
@@ -131,6 +132,89 @@ function RoleSelectPage() {
   );
 }
 
+function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint, loading, role }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+  // Get user info from local/session storage
+  const username = localStorage.getItem('username') || sessionStorage.getItem('username');
+  const city = localStorage.getItem('city') || sessionStorage.getItem('city');
+  const userRole = localStorage.getItem('role') || sessionStorage.getItem('role') || role;
+
+  return (
+    <div className="flex items-center justify-between w-full mb-4 md:mb-8 mt-4 md:mt-6 px-2 relative z-30">
+      {/* Hamburger menu */}
+      <button
+        className="flex md:hidden items-center justify-center p-2 rounded-full bg-white/80 shadow border border-gray-200 hover:bg-blue-100 transition focus:outline-none"
+        onClick={() => setMenuOpen(o => !o)}
+        aria-label="Open menu"
+      >
+        <Menu className="h-7 w-7 text-blue-600 animate-bounce-short" />
+        <style>{`@keyframes bounce-short {0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}.animate-bounce-short{animation:bounce-short 1.2s infinite;}`}</style>
+      </button>
+      {/* Main nav actions (desktop) */}
+      <div className="hidden md:flex gap-3 md:gap-6 items-center flex-1">
+        <button className="min-w-[120px] px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onBack}>
+          <ArrowBackIcon fontSize="small" /> Back
+        </button>
+        <button className="min-w-[120px] px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onComplaint} disabled={loading}>
+          <ReportIcon fontSize="small" /> File Complaint
+        </button>
+        {onHospitalComplaint && (
+          <button className="min-w-[120px] px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onHospitalComplaint}>
+            <ReportProblemIcon fontSize="small" /> File Complaint Against Hospital
+          </button>
+        )}
+        <button className="min-w-[120px] px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onLogout} disabled={loading}>
+          <LogoutIcon fontSize="small" /> Logout
+        </button>
+      </div>
+      {/* Hamburger dropdown (mobile) */}
+      {menuOpen && (
+        <div className="absolute left-2 top-14 bg-white rounded-xl shadow-2xl border border-gray-200 flex flex-col gap-2 p-4 w-56 animate-fade-in z-50">
+          <button className="w-full px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center gap-2 transition text-base" onClick={() => { setMenuOpen(false); onBack(); }}>
+            <ArrowBackIcon fontSize="small" /> Back
+          </button>
+          <button className="w-full px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center gap-2 transition text-base" onClick={() => { setMenuOpen(false); onComplaint(); }} disabled={loading}>
+            <ReportIcon fontSize="small" /> File Complaint
+          </button>
+          {onHospitalComplaint && (
+            <button className="w-full px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center gap-2 transition text-base" onClick={() => { setMenuOpen(false); onHospitalComplaint(); }}>
+              <ReportProblemIcon fontSize="small" /> File Complaint Against Hospital
+            </button>
+          )}
+          <button className="w-full px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center gap-2 transition text-base" onClick={() => { setMenuOpen(false); onLogout(); }} disabled={loading}>
+            <LogoutIcon fontSize="small" /> Logout
+          </button>
+        </div>
+      )}
+      {/* Profile button (right) */}
+      <div className="relative flex items-center">
+        <button
+          className="flex items-center justify-center rounded-full bg-white/80 shadow border border-gray-200 hover:bg-blue-100 transition p-2 ml-2"
+          onClick={() => setProfileOpen(o => !o)}
+          aria-label="Profile"
+        >
+          <UserIcon className="h-7 w-7 text-blue-600" />
+        </button>
+        {profileOpen && (
+          <div className="absolute right-0 top-12 bg-white rounded-xl shadow-2xl border border-gray-200 flex flex-col gap-2 p-4 min-w-[220px] animate-fade-in z-50">
+            <div className="flex items-center gap-3 mb-2">
+              <UserIcon className="h-8 w-8 text-blue-500" />
+              <div>
+                <div className="font-bold text-lg text-blue-900">{username || 'User'}</div>
+                <div className="text-xs text-gray-500">{userRole}</div>
+              </div>
+            </div>
+            {city && <div className="text-sm text-gray-700">City: <span className="font-semibold">{city}</span></div>}
+            <div className="text-xs text-gray-400 mt-2">Logged in as {userRole}</div>
+            <button className="mt-3 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-semibold shadow" onClick={() => { setProfileOpen(false); onLogout(); }}>Logout</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function AdminDashboard() {
   const navigate = useNavigate();
   const [showComplaint, setShowComplaint] = useState(false);
@@ -168,37 +252,13 @@ function AdminDashboard() {
   };
   return (
     <>
-      <div className="flex gap-4 mb-8 mt-6 items-center">
-        <Tooltip title="Go back to home page" arrow>
-          <button
-            className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center gap-2 transition"
-            onClick={handleBack}
-          >
-            <ArrowBackIcon fontSize="small" />
-            Back
-          </button>
-        </Tooltip>
-        <Tooltip title="File a complaint about the system" arrow>
-          <button
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center gap-2 transition"
-            onClick={() => setShowComplaint(true)}
-            disabled={complaintLoading}
-          >
-            <ReportIcon fontSize="small" />
-            File Complaint
-          </button>
-        </Tooltip>
-        <Tooltip title="Logout from your account" arrow>
-          <button
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center gap-2 transition"
-            onClick={handleLogout}
-            disabled={logoutLoading}
-          >
-            <LogoutIcon fontSize="small" />
-            Logout
-          </button>
-        </Tooltip>
-      </div>
+      <DashboardNav
+        onBack={handleBack}
+        onLogout={handleLogout}
+        onComplaint={() => setShowComplaint(true)}
+        loading={logoutLoading || complaintLoading}
+        role="ADMIN"
+      />
       <ConfirmationDialog
         open={confirmDialog.open}
         title={confirmDialog.action === 'logout' ? 'Confirm Logout' : 'Confirm Navigation'}
@@ -265,46 +325,14 @@ function UserDashboard() {
   };
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-3 md:gap-6 mb-4 md:mb-8 mt-4 md:mt-6 items-stretch md:items-center w-full overflow-x-auto px-2">
-        <Tooltip title="Go back to home page" arrow>
-          <button
-            className="w-full md:w-auto min-w-[120px] px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px] text-base md:text-lg"
-            onClick={handleBack}
-          >
-            <ArrowBackIcon fontSize="small" />
-            Back
-          </button>
-        </Tooltip>
-        <Tooltip title="File a complaint about the system" arrow>
-          <button
-            className="w-full md:w-auto min-w-[120px] px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px] text-base md:text-lg"
-            onClick={() => setShowComplaint(true)}
-            disabled={complaintLoading}
-          >
-            <ReportIcon fontSize="small" />
-            File Complaint
-          </button>
-        </Tooltip>
-        <Tooltip title="File a complaint against a hospital" arrow>
-          <button
-            className="w-full md:w-auto min-w-[120px] px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px] text-base md:text-lg"
-            onClick={() => window.open('https://www.nmc.org.in/complaints/', '_blank')}
-          >
-            <ReportProblemIcon fontSize="small" />
-            File Complaint Against Hospital
-          </button>
-        </Tooltip>
-        <Tooltip title="Logout from your account" arrow>
-          <button
-            className="w-full md:w-auto min-w-[120px] px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px] text-base md:text-lg"
-            onClick={handleLogout}
-            disabled={logoutLoading}
-          >
-            <LogoutIcon fontSize="small" />
-            Logout
-          </button>
-        </Tooltip>
-      </div>
+      <DashboardNav
+        onBack={handleBack}
+        onLogout={handleLogout}
+        onComplaint={() => setShowComplaint(true)}
+        onHospitalComplaint={() => window.open('https://www.nmc.org.in/complaints/', '_blank')}
+        loading={logoutLoading || complaintLoading}
+        role="USER"
+      />
       <ConfirmationDialog
         open={confirmDialog.open}
         title={confirmDialog.action === 'logout' ? 'Confirm Logout' : 'Confirm Navigation'}
