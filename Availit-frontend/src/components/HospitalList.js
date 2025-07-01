@@ -100,10 +100,11 @@ function HospitalList({ onEdit, refresh }) {
     return parts.length > 1 ? parts[parts.length - 1].trim() : address.trim();
   }
 
-  function CityMap({ city }) {
+  function CityMapToggle({ city }) {
+    const [showMap, setShowMap] = useState(false);
     const [coords, setCoords] = useState(null);
     useEffect(() => {
-      if (!city) return;
+      if (!showMap || !city) return;
       fetch(`${process.env.REACT_APP_SCRAPPER_URL}/api/location?city=${encodeURIComponent(city)}`)
         .then(res => res.json())
         .then(data => {
@@ -114,14 +115,43 @@ function HospitalList({ onEdit, refresh }) {
           }
         })
         .catch(() => setCoords(null));
-    }, [city]);
-    if (!coords) return (
-      <div className="flex items-center justify-center rounded-xl border border-gray-200 bg-white text-xs text-gray-400 shadow-md w-full h-[120px] md:w-[120px] md:h-[80px] mx-4 my-2 md:mx-0 md:ml-4 md:my-0 p-4">
-        Map unavailable
-      </div>
-    );
+    }, [showMap, city]);
+
+    if (!showMap) {
+      return (
+        <button
+          className="w-full h-[56px] md:w-[120px] md:h-[80px] flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-blue-400 to-green-400 text-white font-bold shadow-md border border-gray-200 transition hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-400 animate-fade-in"
+          onClick={() => setShowMap(true)}
+          type="button"
+          style={{ minWidth: '100px' }}
+        >
+          <MapPin className="h-7 w-7 mb-1 animate-bounce-short" />
+          <span className="text-xs font-semibold">Show Map</span>
+          <style>{`
+            @keyframes bounce-short { 0%,100%{transform:scale(1);} 50%{transform:scale(1.15);} }
+            .animate-bounce-short { animation: bounce-short 1s infinite; }
+            @keyframes fade-in { from { opacity: 0; transform: translateY(16px);} to { opacity: 1; transform: none; } }
+            .animate-fade-in { animation: fade-in 0.5s cubic-bezier(0.77,0,0.175,1) both; }
+          `}</style>
+        </button>
+      );
+    }
+
+    if (!coords) {
+      return (
+        <div className="flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-white text-xs text-gray-400 shadow-md w-full h-[120px] md:w-[120px] md:h-[80px] mx-4 my-2 md:mx-0 md:ml-4 md:my-0 p-4">
+          Map unavailable
+          <button
+            className="mt-2 px-3 py-1 rounded bg-gradient-to-r from-blue-400 to-green-400 text-white font-semibold text-xs shadow hover:scale-105 transition"
+            onClick={() => setShowMap(false)}
+          >
+            Hide Map
+          </button>
+        </div>
+      );
+    }
     return (
-      <div className="rounded-xl border border-gray-200 bg-white shadow-md overflow-hidden flex items-center justify-center w-full h-[120px] md:w-[120px] md:h-[80px] mx-4 my-2 md:mx-0 md:ml-4 md:my-0 p-1">
+      <div className="rounded-xl border border-gray-200 bg-white shadow-md overflow-hidden flex flex-col items-center justify-center w-full h-[120px] md:w-[120px] md:h-[80px] mx-4 my-2 md:mx-0 md:ml-4 md:my-0 p-1">
         <MapContainer
           center={[coords.lat, coords.lon]}
           zoom={12}
@@ -140,6 +170,12 @@ function HospitalList({ onEdit, refresh }) {
             <Popup>{city}</Popup>
           </Marker>
         </MapContainer>
+        <button
+          className="mt-2 px-3 py-1 rounded bg-gradient-to-r from-blue-400 to-green-400 text-white font-semibold text-xs shadow hover:scale-105 transition"
+          onClick={() => setShowMap(false)}
+        >
+          Hide Map
+        </button>
       </div>
     );
   }
@@ -281,10 +317,10 @@ function HospitalList({ onEdit, refresh }) {
                     </Grid>
                     <Grid item xs={12} md={4} className="flex gap-2 justify-end items-center">
                       <div className="hidden md:flex items-center justify-center h-[80px] w-[120px] md:ml-4">
-                        <CityMap city={extractCity(hospital.address)} />
+                        <CityMapToggle city={extractCity(hospital.address)} />
                       </div>
                       <div className="md:hidden w-full mt-2 flex items-center justify-center">
-                        <CityMap city={extractCity(hospital.address)} />
+                        <CityMapToggle city={extractCity(hospital.address)} />
                       </div>
                       <Button
                         variant="outline"
