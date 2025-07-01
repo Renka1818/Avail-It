@@ -1,80 +1,81 @@
 # AvailIt
 
-A full-stack application for managing and viewing hospital bed and oxygen availability.
+A full-stack platform for managing and viewing hospital bed and oxygen availability.
+
+## Live Demo
+[https://avail-it.vercel.app/](https://avail-it.vercel.app/)
 
 ## Project Structure
-
-- **Availit-backend/**: Java Spring Boot REST API for hospital data
-- **Availit-frontend/**: React web app for users and admins
+- **Availit-backend/**: Spring Boot REST API
+- **Availit-frontend/**: React web app
 - **Live-city-scrapper/**: Node.js script for live data scraping (optional)
 
 ---
 
-## 1. Backend (Spring Boot)
+## Backend (Spring Boot)
 
-### Features
-- RESTful API for hospital management
-- PostgreSQL integration
+**Features:**
+- REST API for hospital management
+- PostgreSQL database
 - JWT authentication
 - Swagger/OpenAPI docs
 
-### Prerequisites
+**Requirements:**
 - Java 17+
 - Maven 3.6+
 - PostgreSQL
 
-### Setup
+**Setup:**
 ```sh
 cd Availit-backend
-# Configure DB in src/main/resources/application.properties
+Edit DB config in src/main/resources/application.properties
 ./mvnw spring-boot:run
 ```
 
-### API Docs
+**API Docs:**
 - Swagger UI: http://localhost:9090/swagger-ui.html
 
-### Deployment
-- Deploy to Railway, Render, Fly.io, or similar (see below for suggestions)
+**Deployment:**
+- Deploy to Railway, Render, Fly.io, or similar
 
 ---
 
-## 2. Frontend (React)
+## Frontend (React)
 
-### Features
-- User-friendly hospital search and management
+**Features:**
+- Hospital search and management
 - Authentication modals
 - Toast notifications
 
-### Prerequisites
+**Requirements:**
 - Node.js 16+
 - npm
 
-### Local Setup
+**Setup:**
 ```sh
 cd Availit-frontend
 npm install
 npm start
 ```
 
-### Deployment (Vercel)
-1. Push your code to GitHub/GitLab/Bitbucket
-2. Go to [vercel.com](https://vercel.com/), sign up, and import your repo
-3. Set root directory to `Availit-frontend` if prompted
-4. Build command: `npm run build`, Output directory: `build`
-5. Click Deploy
-6. Update API URLs in your frontend to point to your backend's deployed URL
+**Deployment (Vercel):**
+1. Push code to your repo
+2. Go to [vercel.com](https://vercel.com/) and import your repo
+3. Set root to `Availit-frontend` if prompted
+4. Build command: `npm run build`, Output: `build`
+5. Deploy and update frontend API URLs as needed
 
 ---
 
-## 3. Live City Scraper (Node.js)
+## Live City Scraper (Node.js)
 
-### Purpose
-- Scrapes live hospital data (optional, for automation)
+**Purpose:**
+- Scrapes live hospital data (optional)
 
-### Prerequisites
+**Requirements:**
 - Node.js 16+
 
-### Setup
+**Setup:**
 ```sh
 cd Live-city-scrapper
 npm install
@@ -83,7 +84,7 @@ node index.js
 
 ---
 
-## Backend Hosting Suggestions (Free Tiers)
+## Hosting Suggestions (Free Tiers)
 - [Railway](https://railway.app/)
 - [Render](https://render.com/)
 - [Fly.io](https://fly.io/)
@@ -92,8 +93,25 @@ node index.js
 ---
 
 ## Environment Variables
-- Never commit secrets or credentials. Use `.env` files (already gitignored).
-- Set environment variables in Vercel/your backend host dashboard.
+- Never commit secrets. Use `.env` files (already gitignored).
+- Set environment variables in Vercel or your backend host dashboard.
+
+---
+
+## API Documentation (OpenAPI)
+
+The root directory contains `AvailIt-openapi.yaml`, documenting all backend endpoints and the APIs used by the frontend, including the live city scrapper.
+
+**To view or edit the API docs:**
+- Open [Swagger Editor](https://editor.swagger.io/)
+- File > Import File > select `AvailIt-openapi.yaml`
+- View, edit, and validate the API documentation
+
+You can also use this file in Postman, Insomnia, or any OpenAPI-compatible tool.
+
+**File structure:**
+- `Backend`: All backend endpoints
+- `Frontend`: Endpoints used by the frontend (including scrapper)
 
 ---
 

@@ -1,0 +1,264 @@
+openapi: 3.0.3
+info:
+  title: AvailIt API
+  version: 1.0.0
+  description: |
+    Hospital Bed, ICU, Ventilator & Oxygen Availability Management System API.
+    **Live Demo:** https://avail-it.vercel.app/
+    This spec is split into two main tags:
+      - Backend: All available backend endpoints
+      - Frontend: Endpoints actually used by the frontend (including scrapper)
+servers:
+  - url: http://localhost:8080
+    description: Local backend
+  - url: https://api.availit.com
+    description: Production backend
+  - url: https://availit-scrapper.example.com
+    description: Live city scrapper
+
+tags:
+  - name: Backend
+    description: All backend endpoints
+  - name: Frontend
+    description: Endpoints used by the frontend
+
+paths:
+  # --- BACKEND ENDPOINTS ---
+  /api/auth/register:
+    post:
+      tags: [Backend, Frontend]
+      summary: Register a new user or admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: User registered successfully
+        '400':
+          description: Registration failed
+
+  /api/auth/login:
+    post:
+      tags: [Backend, Frontend]
+      summary: Login as user or admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login successful
+        '401':
+          description: Invalid credentials
+
+  /api/auth/users:
+    get:
+      tags: [Backend]
+      summary: Get all users
+      responses:
+        '200':
+          description: List of users
+
+  /api/auth/city/{username}:
+    get:
+      tags: [Backend, Frontend]
+      summary: Get city for a user
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: City found
+        '404':
+          description: Not found
+    post:
+      tags: [Backend, Frontend]
+      summary: Update city for a user
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                city:
+                  type: string
+      responses:
+        '200':
+          description: City updated
+
+  /api/hospitals/getAllHospitals:
+    get:
+      tags: [Backend, Frontend]
+      summary: Get all hospitals (paginated)
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: size
+          in: query
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of hospitals
+
+  /api/hospitals:
+    post:
+      tags: [Backend, Frontend]
+      summary: Create a new hospital
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HospitalAvailability'
+      responses:
+        '200':
+          description: Hospital created
+
+  /api/hospitals/{id}:
+    put:
+      tags: [Backend, Frontend]
+      summary: Update hospital information
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HospitalAvailability'
+      responses:
+        '200':
+          description: Hospital updated
+    delete:
+      tags: [Backend, Frontend]
+      summary: Delete a hospital
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Hospital deleted
+
+  /api/hospitals/public/hospitals:
+    get:
+      tags: [Backend, Frontend]
+      summary: Get all hospitals (public)
+      responses:
+        '200':
+          description: List of hospitals
+
+  /api/hospitals/city/{cityName}:
+    get:
+      tags: [Backend, Frontend]
+      summary: Get hospitals by city
+      parameters:
+        - name: cityName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of hospitals
+
+  /api/hospitals/cities:
+    get:
+      tags: [Backend, Frontend]
+      summary: Get all available cities
+      responses:
+        '200':
+          description: List of cities
+
+  # --- SCRAPPER ENDPOINT USED BY FRONTEND ---
+  /api/delhi-hospitals:
+    get:
+      tags: [Frontend]
+      summary: Get live Delhi hospitals (scrapper)
+      responses:
+        '200':
+          description: List of live Delhi hospitals
+
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+          enum: [USER, ADMIN]
+    LoginRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    HospitalAvailability:
+      type: object
+      properties:
+        id:
+          type: integer
+        hospitalName:
+          type: string
+        totalBeds:
+          type: integer
+        availableBeds:
+          type: integer
+        oxygenAvailable:
+          type: boolean
+        address:
+          type: string
+        contactNumber:
+          type: string
+        icuBeds:
+          type: integer
+        ventilators:
+          type: integer
+        locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+    Location:
+      type: object
+      properties:
+        address:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string 

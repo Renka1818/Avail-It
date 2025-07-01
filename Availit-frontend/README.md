@@ -1,3 +1,10 @@
+# AvailIt Frontend
+
+React app for searching and managing hospital bed and oxygen availability.
+
+## Live Demo
+[https://avail-it.vercel.app/](https://avail-it.vercel.app/)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +75,21 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## API Documentation (OpenAPI)
+
+A comprehensive OpenAPI YAML file (`AvailIt-openapi.yaml`) is available in the project root. This file documents all backend endpoints and the subset of endpoints used by the frontend (including the live city scrapper).
+
+### How to Use
+
+- **Swagger Editor:**
+  1. Go to [Swagger Editor](https://editor.swagger.io/)
+  2. Click 'File' > 'Import File' and select `AvailIt-openapi.yaml` from the project root.
+  3. View, edit, and validate the API documentation interactively.
+- **Other Tools:**
+  - You can also import this YAML file into Postman, Insomnia, or any OpenAPI-compatible tool for testing and documentation.
+
+### File Structure
+- The YAML file is split into two main tags:
+  - `Backend`: All backend endpoints
+  - `Frontend`: Endpoints actually used by the frontend (including scrapper)
