@@ -212,8 +212,8 @@ function UserHospitalSearch() {
     }
     setCoordsLoading(true);
     setCoordsError(null);
-    // Use Nominatim to geocode city name
-    fetch(`https://nominatim.openstreetmap.org/search?city=${encodeURIComponent(city)}&format=json&limit=1`)
+    // Use scrapper to geocode city name
+    fetch(`${process.env.REACT_APP_SCRAPPER_URL}/api/location?city=${encodeURIComponent(city)}`)
       .then(res => res.json())
       .then(data => {
         if (data && data.length > 0) {
