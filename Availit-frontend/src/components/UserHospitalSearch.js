@@ -589,6 +589,58 @@ function UserHospitalSearch({ showLiveDataToast }) {
             )}
           </div>
 
+          {/* Statistics toggle and bar for selected city */}
+          <div className="mb-4 flex items-center justify-end w-full">
+            <button
+              className="px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded transition text-xs font-semibold"
+              onClick={() => setShowStats(s => !s)}
+              title="Show statistics for this city"
+              type="button"
+            >
+              {showStats ? 'Hide Statistics' : 'Show Statistics'}
+            </button>
+          </div>
+          {showStats && stats && (
+            <div className="mb-6 w-full overflow-x-auto">
+              <div className="flex gap-4 md:grid md:grid-cols-6 md:gap-6 animate-fade-in">
+                <div className="min-w-[160px] bg-gradient-to-br from-blue-400 to-blue-600 text-white rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
+                  <Activity className="h-7 w-7 mb-1 animate-pulse" />
+                  <span className="text-3xl font-extrabold tracking-tight drop-shadow-lg">{stats.totalHospitals}</span>
+                  <span className="text-base font-semibold mt-1">Hospitals</span>
+                </div>
+                <div className="min-w-[160px] bg-gradient-to-br from-yellow-300 to-yellow-500 text-yellow-900 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
+                  <Bed className="h-7 w-7 mb-1 animate-bounce" />
+                  <span className="text-3xl font-extrabold tracking-tight">{stats.totalBeds}</span>
+                  <span className="text-base font-semibold mt-1">Total Beds</span>
+                </div>
+                <div className="min-w-[160px] bg-gradient-to-br from-green-300 to-green-500 text-green-900 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
+                  <Bed className="h-7 w-7 mb-1 animate-bounce" />
+                  <span className="text-3xl font-extrabold tracking-tight">{stats.availableBeds}</span>
+                  <span className="text-base font-semibold mt-1">Available Beds</span>
+                </div>
+                <div className="min-w-[160px] bg-gradient-to-br from-blue-200 to-blue-400 text-blue-900 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
+                  <Stethoscope className="h-7 w-7 mb-1 animate-bounce" />
+                  <span className="text-3xl font-extrabold tracking-tight">{stats.icuBeds}</span>
+                  <span className="text-base font-semibold mt-1">ICU Beds</span>
+                </div>
+                <div className="min-w-[160px] bg-gradient-to-br from-purple-300 to-purple-500 text-purple-900 rounded-xl shadow-lg p-4 flex flex-col items-center justify-center">
+                  <Users className="h-7 w-7 mb-1 animate-bounce" />
+                  <span className="text-3xl font-extrabold tracking-tight">{stats.ventilators}</span>
+                  <span className="text-base font-semibold mt-1">Ventilators</span>
+                </div>
+                <div className={`min-w-[160px] ${stats.oxygenHospitals > 0 ? 'bg-gradient-to-br from-green-400 to-green-600 text-green-900' : 'bg-gradient-to-br from-red-300 to-red-500 text-red-900'} rounded-xl shadow-lg p-4 flex flex-col items-center justify-center`}>
+                  <Activity className={`h-7 w-7 mb-1 ${stats.oxygenHospitals > 0 ? 'animate-pulse' : ''}`} />
+                  <span className="text-3xl font-extrabold tracking-tight">{stats.oxygenHospitals}</span>
+                  <span className="text-base font-semibold mt-1">Hospitals with Oxygen</span>
+                </div>
+              </div>
+              <style>{`
+                @keyframes fade-in { from { opacity: 0; transform: translateY(24px);} to { opacity: 1; transform: none; } }
+                .animate-fade-in { animation: fade-in 0.7s cubic-bezier(0.77,0,0.175,1) both; }
+              `}</style>
+            </div>
+          )}
+
           {filtered.length === 0 ? (
             <div className="text-center py-12">
               <Bed className="h-12 w-12 text-gray-400 mx-auto mb-4" />
