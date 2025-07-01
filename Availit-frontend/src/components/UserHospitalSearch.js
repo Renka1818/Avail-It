@@ -414,10 +414,11 @@ function UserHospitalSearch() {
             )}
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-8">
-          <div className="flex flex-col gap-2 mb-2">
-            <div className="flex flex-col w-full">
-              <div className="flex items-center gap-2 mb-1">
+        <CardContent className="p-4 sm:p-6 md:p-8">
+          <div className="flex flex-col md:flex-row md:items-end gap-4 mb-4 w-full">
+            {/* City selector and change button */}
+            <div className="w-full md:w-auto flex flex-col gap-2">
+              <div className="flex items-center gap-2 mb-1 flex-wrap">
                 <span className="font-semibold text-gray-700 text-base md:text-lg">City:</span>
                 {!changingCity && (
                   <>
@@ -513,19 +514,20 @@ function UserHospitalSearch() {
                 </div>
               )}
             </div>
-            <div className="relative w-full">
+            {/* Search bar */}
+            <div className="relative w-full md:flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
               <Input
                 placeholder="Search hospitals by name or address..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="pl-10 border-2 border-gray-200 focus:border-indigo-400 focus:ring-indigo-400 transition-colors text-base font-medium"
+                className="pl-10 border-2 border-gray-200 focus:border-indigo-400 focus:ring-indigo-400 transition-colors text-base font-medium w-full"
               />
             </div>
           </div>
 
           {/* Map display for selected city */}
-          <div className="mb-6">
+          <div className="mb-6 w-full">
             {coordsLoading && (
               <div className="flex items-center gap-2 text-gray-500 text-sm mb-2">
                 <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-500"></span>
@@ -567,20 +569,20 @@ function UserHospitalSearch() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {filtered.map(hospital => (
                 <div
                   key={hospital.id}
-                  className="bg-white rounded-xl border border-gray-200 p-6 hover:shadow-lg transition-all duration-200 hover:border-indigo-300"
+                  className="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 md:p-6 hover:shadow-lg transition-all duration-200 hover:border-indigo-300"
                 >
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+                  <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex-1">
-                      <div className="flex items-start justify-between mb-4">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-4">
                         <div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-2">
+                          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
                             {hospital.hospitalName || hospital.name}
                           </h3>
-                          <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4 text-sm text-gray-600 mb-3">
                             <div className="flex items-center gap-1">
                               <MapPin className="h-4 w-4" />
                               <span>{hospital.address || hospital.name || ''}</span>
@@ -593,7 +595,7 @@ function UserHospitalSearch() {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-2 gap-2 md:grid-cols-4 md:gap-4">
                         <div className={`text-center p-3 rounded-lg ${getAvailabilityColor(hospital.availableBeds, hospital.totalBeds)}`}>
                           <div className="flex items-center justify-center gap-1 mb-1">
                             <Bed className="h-4 w-4" />

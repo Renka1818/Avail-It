@@ -12,10 +12,10 @@ const ConfirmationDialog = ({ open, title, description, onConfirm, onCancel, con
       <WarningAmberIcon className="text-yellow-500" />
       {title || 'Are you sure?'}
     </DialogTitle>
-    <DialogContent>
+    <DialogContent className="p-2 sm:p-4">
       <div className="text-gray-700 text-base py-2">{description || 'This action cannot be undone.'}</div>
     </DialogContent>
-    <DialogActions>
+    <DialogActions className="gap-2 sm:gap-4">
       <Button onClick={onCancel} color="inherit" variant="outlined">{cancelText}</Button>
       <Button onClick={onConfirm} color="error" variant="contained">{confirmText}</Button>
     </DialogActions>

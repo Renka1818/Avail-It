@@ -5,7 +5,7 @@ export default function ComplaintModal({ open, onClose, onSubmit }) {
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <div className="bg-white rounded-xl shadow-2xl p-8 max-w-md w-full text-center relative">
+      <div className="bg-white rounded-xl shadow-2xl p-4 sm:p-8 max-w-xs sm:max-w-md w-full text-center relative">
         <button
           className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-2xl font-bold"
           onClick={onClose}
@@ -21,7 +21,7 @@ export default function ComplaintModal({ open, onClose, onSubmit }) {
           value={complaint}
           onChange={e => setComplaint(e.target.value)}
         />
-        <div className="flex justify-center gap-4 mt-4">
+        <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 mt-4 w-full">
           <button
             className="px-6 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold transition"
             onClick={() => { onSubmit(complaint); setComplaint(''); onClose(); }}

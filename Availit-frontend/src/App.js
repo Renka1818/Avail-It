@@ -20,7 +20,7 @@ function EntryScreen() {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700">
-      <img src="/availit-logo2.JPG" alt="AvailIt Logo" className="w-72 h-72 object-contain mb-10 mt-8 drop-shadow-2xl" />
+      <img src="/availit-logo.jpg" alt="AvailIt Logo" className="w-72 h-72 object-contain mb-10 mt-8 drop-shadow-2xl" />
       <h1
         className="text-5xl md:text-7xl font-extrabold text-white mb-2 tracking-wide text-center drop-shadow-2xl animate-slidein"
         style={{
@@ -85,7 +85,7 @@ function RoleSelectPage() {
           />
         </svg>
         <img
-          src="/availit-logo2.JPG"
+          src="/availit-logo.jpg"
           alt="AvailIt Logo"
           className="relative z-10 w-44 h-44 object-contain mx-auto bg-white rounded-xl shadow-xl border-4 border-blue-200"
           style={{ marginTop: '-30px' }}
@@ -253,10 +253,10 @@ function UserDashboard() {
   };
   return (
     <>
-      <div className="flex gap-4 mb-8 mt-6 items-center">
+      <div className="flex flex-col md:flex-row gap-2 md:gap-4 mb-4 md:mb-8 mt-4 md:mt-6 items-stretch md:items-center w-full overflow-x-auto px-2">
         <Tooltip title="Go back to home page" arrow>
           <button
-            className="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center gap-2 transition"
+            className="w-full md:w-auto px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px]"
             onClick={handleBack}
           >
             <ArrowBackIcon fontSize="small" />
@@ -265,7 +265,7 @@ function UserDashboard() {
         </Tooltip>
         <Tooltip title="File a complaint about the system" arrow>
           <button
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center gap-2 transition"
+            className="w-full md:w-auto px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px]"
             onClick={() => setShowComplaint(true)}
             disabled={complaintLoading}
           >
@@ -275,7 +275,7 @@ function UserDashboard() {
         </Tooltip>
         <Tooltip title="File a complaint against a hospital" arrow>
           <button
-            className="px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center gap-2 transition"
+            className="w-full md:w-auto px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px]"
             onClick={() => window.open('https://www.nmc.org.in/complaints/', '_blank')}
           >
             <ReportProblemIcon fontSize="small" />
@@ -284,7 +284,7 @@ function UserDashboard() {
         </Tooltip>
         <Tooltip title="Logout from your account" arrow>
           <button
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center gap-2 transition"
+            className="w-full md:w-auto px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition min-h-[48px]"
             onClick={handleLogout}
             disabled={logoutLoading}
           >
