@@ -168,33 +168,36 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
 
   return (
     <div className="flex items-center justify-between w-full mb-4 md:mb-8 mt-4 md:mt-6 px-2 relative z-30">
-      {/* Hamburger menu */}
+      {/* Hamburger menu - always visible */}
       <button
-        className="flex md:hidden items-center justify-center p-2 rounded-full bg-white/80 shadow border border-gray-200 hover:bg-blue-100 transition focus:outline-none"
+        className="flex items-center justify-center p-2 rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow border-2 border-white hover:scale-105 transition focus:outline-none"
         onClick={() => setMenuOpen(o => !o)}
         aria-label="Open menu"
+        style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.12)' }}
       >
-        <Menu className="h-7 w-7 text-blue-600 animate-bounce-short" />
+        <Menu className="h-8 w-8 text-white animate-bounce-short" />
         <style>{`@keyframes bounce-short {0%,100%{transform:scale(1);}50%{transform:scale(1.15);}}.animate-bounce-short{animation:bounce-short 1.2s infinite;}`}</style>
       </button>
-      {/* Main nav actions (desktop) */}
-      <div className="hidden md:flex gap-3 md:gap-6 items-center flex-1">
-        <button className="min-w-[120px] px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onBack}>
-          <ArrowBackIcon fontSize="small" /> Back
-        </button>
-        <button className="min-w-[120px] px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onComplaint} disabled={loading}>
-          <ReportIcon fontSize="small" /> File Complaint
-        </button>
-        {onHospitalComplaint && (
-          <button className="min-w-[120px] px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onHospitalComplaint}>
-            <ReportProblemIcon fontSize="small" /> File Complaint Against Hospital
+      {/* Main nav actions (button bar) - hidden when menu is open */}
+      {!menuOpen && (
+        <div className="flex gap-3 md:gap-6 items-center flex-1 justify-center">
+          <button className="min-w-[120px] px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onBack}>
+            <ArrowBackIcon fontSize="small" /> Back
           </button>
-        )}
-        <button className="min-w-[120px] px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onLogout} disabled={loading}>
-          <LogoutIcon fontSize="small" /> Logout
-        </button>
-      </div>
-      {/* Hamburger dropdown (mobile) */}
+          <button className="min-w-[120px] px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onComplaint} disabled={loading}>
+            <ReportIcon fontSize="small" /> File Complaint
+          </button>
+          {onHospitalComplaint && (
+            <button className="min-w-[120px] px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onHospitalComplaint}>
+              <ReportProblemIcon fontSize="small" /> File Complaint Against Hospital
+            </button>
+          )}
+          <button className="min-w-[120px] px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onLogout} disabled={loading}>
+            <LogoutIcon fontSize="small" /> Logout
+          </button>
+        </div>
+      )}
+      {/* Hamburger dropdown (all screens) */}
       {menuOpen && (
         <div className="absolute left-2 top-14 bg-white rounded-xl shadow-2xl border border-gray-200 flex flex-col gap-2 p-4 w-56 animate-fade-in z-50">
           <button className="w-full px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center gap-2 transition text-base" onClick={() => { setMenuOpen(false); onBack(); }}>
@@ -213,19 +216,20 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
           </button>
         </div>
       )}
-      {/* Profile button (right) */}
+      {/* Profile button (right) - more visible */}
       <div className="relative flex items-center">
         <button
-          className="flex items-center justify-center rounded-full bg-white/80 shadow border border-gray-200 hover:bg-blue-100 transition p-2 ml-2"
+          className="flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow-lg border-2 border-white hover:scale-105 transition p-2 ml-2"
           onClick={() => setProfileOpen(o => !o)}
           aria-label="Profile"
+          style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.18)' }}
         >
-          <UserIcon className="h-7 w-7 text-blue-600" />
+          <UserIcon className="h-9 w-9 text-white" />
         </button>
         {profileOpen && (
           <div className="absolute right-0 top-12 bg-white rounded-xl shadow-2xl border border-gray-200 flex flex-col gap-2 p-4 min-w-[220px] animate-fade-in z-50">
             <div className="flex items-center gap-3 mb-2">
-              <UserIcon className="h-8 w-8 text-blue-500" />
+              <UserIcon className="h-10 w-10 text-blue-500" />
               <div>
                 <div className="font-bold text-lg text-blue-900">{username || 'User'}</div>
                 <div className="text-xs text-gray-500">{userRole}</div>
