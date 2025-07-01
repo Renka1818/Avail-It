@@ -35,7 +35,7 @@ function EntryScreen() {
         Available in Minutes
       </h1>
       <button
-        className="mt-14 px-10 py-5 rounded-full bg-white text-blue-700 font-bold text-2xl shadow-xl hover:bg-blue-100 transition-all duration-200 border-4 border-blue-300 hover:scale-105"
+        className="joyride-get-started mt-14 px-10 py-5 rounded-full bg-white text-blue-700 font-bold text-2xl shadow-xl hover:bg-blue-100 transition-all duration-200 border-4 border-blue-300 hover:scale-105"
         onClick={() => navigate('/role')}
       >
         Get Started
@@ -142,13 +142,13 @@ function RoleSelectPage() {
       </div>
       <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-6 mt-6 w-full max-w-xs sm:max-w-none mx-auto">
         <button
-          className="w-full sm:w-auto px-8 py-3 rounded bg-purple-600 hover:bg-purple-700 text-white font-semibold text-lg transition shadow-lg"
+          className="joyride-login-user w-full sm:w-auto px-8 py-3 rounded bg-purple-600 hover:bg-purple-700 text-white font-semibold text-lg transition shadow-lg"
           onClick={() => handleSelect('user')}
         >
           Login as User
         </button>
         <button
-          className="w-full sm:w-auto px-8 py-3 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg transition shadow-lg"
+          className="joyride-login-admin w-full sm:w-auto px-8 py-3 rounded bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg transition shadow-lg"
           onClick={() => handleSelect('admin')}
         >
           Login as Admin
@@ -203,7 +203,7 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
     <div ref={navRef} className="flex items-center justify-between w-full mb-4 md:mb-8 mt-4 md:mt-6 px-2 relative z-30">
       {/* Hamburger menu - always visible */}
       <button
-        className="flex items-center justify-center p-2 rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow border-2 border-white hover:scale-105 transition focus:outline-none"
+        className="joyride-hamburger flex items-center justify-center p-2 rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow border-2 border-white hover:scale-105 transition focus:outline-none"
         onClick={handleMenuToggle}
         aria-label="Open menu"
         style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.12)' }}
@@ -214,14 +214,14 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
       {/* Main nav actions (button bar) - hidden when menu is open */}
       {!menuOpen && (
         <div className="flex gap-3 md:gap-6 items-center flex-1 justify-center">
-          <button className="min-w-[120px] px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onBack}>
+          <button className="joyride-back min-w-[120px] px-4 py-3 bg-blue-500 hover:bg-blue-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onBack}>
             <ArrowBackIcon fontSize="small" /> Back
           </button>
-          <button className="min-w-[120px] px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onComplaint} disabled={loading}>
+          <button className="joyride-complaint min-w-[120px] px-4 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onComplaint} disabled={loading}>
             <ReportIcon fontSize="small" /> File Complaint
           </button>
           {onHospitalComplaint && (
-            <button className="min-w-[120px] px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onHospitalComplaint}>
+            <button className="joyride-complaint-hospital min-w-[120px] px-4 py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-full shadow flex items-center justify-center gap-2 transition text-base md:text-lg" onClick={onHospitalComplaint}>
               <ReportProblemIcon fontSize="small" /> File Complaint Against Hospital
             </button>
           )}
@@ -252,7 +252,7 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
       {/* Profile button (right) - more visible */}
       <div className="relative flex items-center">
         <button
-          className="flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow-lg border-2 border-white hover:scale-105 transition p-2 ml-2"
+          className="joyride-profile flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow-lg border-2 border-white hover:scale-105 transition p-2 ml-2"
           onClick={handleProfileToggle}
           aria-label="Profile"
           style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.18)' }}
@@ -427,89 +427,80 @@ function App() {
       styles: { tooltip: { maxWidth: 340 } },
     },
     {
-      target: '.animate-slidein',
-      content: 'This is the main slogan and entry point.',
+      target: '.joyride-get-started',
+      content: 'Click here to get started! The tour will continue after you click.',
       placement: 'bottom',
+      spotlightClicks: true,
       styles: { tooltip: { maxWidth: 320 } },
     },
     {
-      target: '.bg-white/80',
-      content: 'Here is the welcome message and app description.',
-      placement: 'bottom',
-      styles: { tooltip: { maxWidth: 320 } },
-    },
-    {
-      target: '.bg-purple-600',
-      content: 'Click here to login as a User and continue the tour.',
+      target: '.joyride-login-user',
+      content: 'Login as a User to search for hospitals and availability.',
       placement: 'top',
       spotlightClicks: true,
-      disableOverlayClose: true,
       styles: { tooltip: { maxWidth: 320 } },
     },
     {
-      target: '.bg-blue-600',
-      content: 'Click here to login as an Admin and continue the tour.',
+      target: '.joyride-login-admin',
+      content: 'Login as an Admin to manage hospital data.',
       placement: 'top',
       spotlightClicks: true,
-      disableOverlayClose: true,
       styles: { tooltip: { maxWidth: 320 } },
     },
     {
-      target: '.flex.items-center.justify-between.w-full.mb-4',
-      content: 'This is the navigation bar. Use the hamburger menu and profile button for navigation and account actions.',
+      target: '.joyride-hamburger',
+      content: 'This is the navigation bar. Use the hamburger menu for navigation.',
       placement: 'bottom',
+      spotlightClicks: true,
       styles: { tooltip: { maxWidth: 340 } },
     },
     {
-      target: '.flex.items-center.justify-between.w-full.mb-4 button', // Hamburger menu button
-      content: 'Click the hamburger menu to open navigation options.',
-      placement: 'bottom',
-      spotlightClicks: true,
-      disableOverlayClose: true,
-      styles: { tooltip: { maxWidth: 320 } },
-    },
-    {
-      target: '.bg-gradient-to-br.from-blue-400.to-green-400',
-      content: 'Click your profile button to view your info or logout.',
+      target: '.joyride-profile',
+      content: 'This is your profile button. Click to view your info or logout.',
       placement: 'left',
       spotlightClicks: true,
-      disableOverlayClose: true,
       styles: { tooltip: { maxWidth: 320 } },
     },
     {
-      target: '.min-w-[120px].bg-blue-500',
+      target: '.joyride-back',
       content: 'Use this button to go back to the previous page.',
       placement: 'bottom',
+      spotlightClicks: true,
       styles: { tooltip: { maxWidth: 320 } },
     },
     {
-      target: '.min-w-[120px].bg-red-600',
+      target: '.joyride-complaint',
       content: 'File a complaint if you face any issues.',
       placement: 'bottom',
+      spotlightClicks: true,
       styles: { tooltip: { maxWidth: 320 } },
     },
     {
-      target: '.min-w-[120px].bg-yellow-500',
+      target: '.joyride-complaint-hospital',
       content: 'File a complaint against a hospital (User only).',
       placement: 'bottom',
+      spotlightClicks: true,
       styles: { tooltip: { maxWidth: 320 } },
     },
     {
-      target: '.min-w-[120px].bg-indigo-600',
+      target: '.joyride-logout',
       content: 'Logout from your account.',
       placement: 'bottom',
+      spotlightClicks: true,
       styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.statistics-bar',
       content: 'This bar shows live statistics for hospitals and beds.',
       placement: 'bottom',
+      spotlightClicks: true,
       styles: { tooltip: { maxWidth: 340 } },
     },
     {
       target: '.hospital-card',
       content: 'Each card shows a hospital. Click Show Map to view its location.',
       placement: 'top',
+      spotlightClicks: true,
       styles: { tooltip: { maxWidth: 340 } },
     },
     {
@@ -517,23 +508,13 @@ function App() {
       content: 'Click here to view the hospital on a map.',
       placement: 'left',
       spotlightClicks: true,
-      disableOverlayClose: true,
       styles: { tooltip: { maxWidth: 320 } },
     },
     {
       target: '.search-bar',
-      content: 'Click here and start typing to search for hospitals.',
+      content: 'Use this to search for hospitals by name, city, or type.',
       placement: 'bottom',
       spotlightClicks: true,
-      disableOverlayClose: true,
-      styles: { tooltip: { maxWidth: 320 } },
-    },
-    {
-      target: '.mt-14.px-10.py-5.rounded-full.bg-white.text-blue-700', // Get Started button
-      content: 'Click here to get started! The tour will continue after you click.',
-      placement: 'bottom',
-      spotlightClicks: true,
-      disableOverlayClose: true,
       styles: { tooltip: { maxWidth: 320 } },
     },
     {
