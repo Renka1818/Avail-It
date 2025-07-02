@@ -8,7 +8,7 @@ A full-stack platform for managing and viewing hospital bed and oxygen availabil
 ## Project Structure
 - **Availit-backend/**: Spring Boot REST API
 - **Availit-frontend/**: React web app
-- **Live-city-scrapper/**: Node.js script for live data scraping (optional)
+- **Live-city-scrapper/**: Node.js script for live data scraping.
 
 ---
 
