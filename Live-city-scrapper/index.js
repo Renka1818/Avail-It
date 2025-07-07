@@ -71,18 +71,17 @@ app.get('/api/bangalore-hospitals', async (req, res) => {
     });
     const $ = cheerio.load(data);
     const hospitals = [];
-    // Each hospital is in a .elementor-widget-container > div (card)
-    $('.elementor-widget-container > div').each((i, el) => {
-      const name = $(el).find('b').first().text().trim() || $(el).find('strong').first().text().trim();
-      // Get all text nodes, remove name and phone
-      let fullText = $(el).text().replace(/\s+/g, ' ').trim();
-      let phoneMatch = fullText.match(/Phone\s*:\s*([0-9\-]+)/i);
-      let phone = phoneMatch ? phoneMatch[1] : '';
-      // Remove name and phone from fullText to get address
-      let address = fullText.replace(name, '').replace(/Phone\s*:\s*[0-9\-]+/i, '').trim();
+    $('div.gen-card-content').each((i, el) => {
+      const name = $(el).find('h2.heading4').text().trim();
+      const address = $(el).find('p').first().find('a').text().trim();
+      let phone = '';
+      $(el).find('p').eq(1).find('strong').each((j, strong) => {
+        if ($(strong).text().trim().toLowerCase().startsWith('phone')) {
+          phone = $(strong)[0].nextSibling.nodeValue.trim();
+        }
+      });
       hospitals.push({ name, address, phone });
     });
-    // Filter out empty entries
     const filtered = hospitals.filter(h => h.name && h.phone);
     res.json(filtered);
   } catch (err) {

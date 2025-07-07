@@ -94,19 +94,29 @@ function UserHospitalSearch({ showLiveDataToast }) {
     const cityKey = cityName.trim().toLowerCase();
     if (LIVE_DATA_SOURCES[cityKey]) {
       LIVE_DATA_SOURCES[cityKey].fetch().then(data => {
-
         const mapped = Array.isArray(data)
-          ? data.map(h => ({
-              hospitalName: h.hospitalName || h.name || '',
-              address: h.address || h.location || '',
-              availableBeds: h.availableBeds || h.bedsAvailable || h.available_beds || 0,
-              totalBeds: h.totalBeds || h.bedsTotal || h.total_beds || 0,
-              icuBeds: h.icuBeds || h.icu || h.icu_beds || 0,
-              ventilators: h.ventilators || h.ventilator || h.ventilators_available || 0,
-              oxygenAvailable: h.oxygenAvailable || h.oxygen || h.oxygen_available || false,
-              contactNumber: h.contactNumber || h.phone || h.contact || '',
-              ...h
-            }))
+          ? data.map(h => {
+              if (cityKey === 'bangalore') {
+                return {
+                  hospitalName: h.name || '',
+                  address: h.address || '',
+                  contactNumber: h.phone || '',
+                  // No bed/ICU/ventilator info for Bangalore
+                };
+              } else {
+                return {
+                  hospitalName: h.hospitalName || h.name || '',
+                  address: h.address || h.location || '',
+                  availableBeds: h.availableBeds || h.bedsAvailable || h.available_beds || 0,
+                  totalBeds: h.totalBeds || h.bedsTotal || h.total_beds || 0,
+                  icuBeds: h.icuBeds || h.icu || h.icu_beds || 0,
+                  ventilators: h.ventilators || h.ventilator || h.ventilators_available || 0,
+                  oxygenAvailable: h.oxygenAvailable || h.oxygen || h.oxygen_available || false,
+                  contactNumber: h.contactNumber || h.phone || h.contact || '',
+                  ...h
+                };
+              }
+            })
           : [];
         setHospitals(mapped);
         setLoading(false);
@@ -384,20 +394,17 @@ function UserHospitalSearch({ showLiveDataToast }) {
     <>
       {/* Persistent live data banner if city is not Delhi */}
       {city && city.trim().toLowerCase() !== 'delhi' && showBanner && (
-        <div className="fixed top-4 right-4 z-[110] animate-pulse bg-green-100 border border-green-300 text-green-800 px-6 py-3 rounded-lg shadow-lg flex items-center gap-3">
-          <svg className="h-6 w-6 text-green-500 animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="#22c55e" />
-            <path stroke="#fff" strokeWidth="2" d="M8 12l2 2 4-4" />
-          </svg>
-          <span className="font-semibold">Live data is available for <span className="underline">Delhi</span>! Switch to Delhi city for real-time hospital info.</span>
-          <button
-            onClick={() => setShowBanner(false)}
-            className="ml-2 text-green-700 hover:text-white hover:bg-green-500 focus:bg-green-600 focus:text-white text-2xl font-extrabold rounded-full w-9 h-9 flex items-center justify-center shadow focus:outline-none focus:ring-2 focus:ring-green-400 transition-all duration-150"
-            aria-label="Close live data banner"
-          >
-            &times;
-          </button>
-        </div>
+        city.trim().toLowerCase() === 'bangalore' ? (
+          <div className="bg-blue-100 border border-blue-300 text-blue-800 px-4 py-2 rounded mb-4 flex items-center justify-between">
+            <span className="font-semibold">Live hospital list is available for <span className="underline">Bangalore</span>. Real-time bed data is not available for this city.</span>
+            <button onClick={() => setShowBanner(false)} className="ml-4 text-blue-600 hover:text-blue-900">&times;</button>
+          </div>
+        ) : (
+          <div className="bg-green-100 border border-green-300 text-green-800 px-4 py-2 rounded mb-4 flex items-center justify-between">
+            <span className="font-semibold">Live data is available for <span className="underline">Delhi</span>! Switch to Delhi city for real-time hospital info.</span>
+            <button onClick={() => setShowBanner(false)} className="ml-4 text-green-600 hover:text-green-900">&times;</button>
+          </div>
+        )
       )}
       {/* City Change Confirmation Dialog (always overlays UI) */}
       {showCityConfirm && (
