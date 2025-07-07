@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { getHospitalsByCity, getUserCity, updateUserCity, getAllCities, getDelhiHospitalsLive } from '../services/hospitalService';
+import { getHospitalsByCity, getUserCity, updateUserCity, getAllCities, getDelhiHospitalsLive, getBangaloreHospitalsLive } from '../services/hospitalService';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Input } from './ui/input';
 import { Search, MapPin, Phone, Bed, Users, Stethoscope, Activity } from 'lucide-react';
@@ -13,6 +13,10 @@ const LIVE_DATA_SOURCES = {
   delhi: {
     fetch: getDelhiHospitalsLive,
     label: 'Delhi',
+  },
+  bangalore: {
+    fetch: getBangaloreHospitalsLive,
+    label: 'Bangalore',
   },
 };
 
@@ -35,7 +39,7 @@ function UserHospitalSearch({ showLiveDataToast }) {
   const [showCitySuggestions, setShowCitySuggestions] = useState(false);
   const cityInputRef = useRef();
   const [recentCities, setRecentCities] = useState([]);
-  const [popularCities, setPopularCities] = useState(["Pune", "Mumbai", "Delhi"]);
+  const [popularCities, setPopularCities] = useState(["Pune", "Mumbai", "Delhi", "Bangalore"]);
   const [geoCity, setGeoCity] = useState(null);
   const [geoError, setGeoError] = useState(null);
   const [cityCoords, setCityCoords] = useState(null);

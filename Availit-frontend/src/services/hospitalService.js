@@ -54,4 +54,8 @@ export function getAllCities() {
 
 export function getDelhiHospitalsLive() {
   return fetch(`${SCRAPPER_URL}/api/delhi-hospitals`).then(res => res.json());
+}
+
+export function getBangaloreHospitalsLive() {
+  return fetch(`${SCRAPPER_URL}/api/bangalore-hospitals`).then(res => res.json());
 } 
