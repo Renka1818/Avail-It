@@ -393,18 +393,13 @@ function UserHospitalSearch({ showLiveDataToast }) {
   return (
     <>
       {/* Persistent live data banner if city is not Delhi */}
-      {city && city.trim().toLowerCase() !== 'delhi' && showBanner && (
-        city.trim().toLowerCase() === 'bangalore' ? (
-          <div className="bg-blue-100 border border-blue-300 text-blue-800 px-4 py-2 rounded mb-4 flex items-center justify-between">
-            <span className="font-semibold">Live hospital list is available for <span className="underline">Bangalore</span>. Real-time bed data is not available for this city.</span>
-            <button onClick={() => setShowBanner(false)} className="ml-4 text-blue-600 hover:text-blue-900">&times;</button>
-          </div>
-        ) : (
-          <div className="bg-green-100 border border-green-300 text-green-800 px-4 py-2 rounded mb-4 flex items-center justify-between">
-            <span className="font-semibold">Live data is available for <span className="underline">Delhi</span>! Switch to Delhi city for real-time hospital info.</span>
-            <button onClick={() => setShowBanner(false)} className="ml-4 text-green-600 hover:text-green-900">&times;</button>
-          </div>
-        )
+      {city && (["delhi", "bangalore"].includes(city.trim().toLowerCase())) && showBanner && (
+        <div className="bg-blue-100 border border-blue-300 text-blue-800 px-4 py-2 rounded mb-4 flex items-center justify-between">
+          <span className="font-semibold">
+            Live hospital data is available for <span className="underline">Delhi</span> and <span className="underline">Bangalore</span>! Switch to either city for real-time hospital info.
+          </span>
+          <button onClick={() => setShowBanner(false)} className="ml-4 text-blue-600 hover:text-blue-900">&times;</button>
+        </div>
       )}
       {/* City Change Confirmation Dialog (always overlays UI) */}
       {showCityConfirm && (
