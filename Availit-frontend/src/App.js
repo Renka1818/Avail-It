@@ -15,7 +15,7 @@ import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import Tooltip from '@mui/material/Tooltip';
 import ConfirmationDialog from './components/ui/ConfirmationDialog';
-import { Menu, User as UserIcon } from 'lucide-react';
+import { Menu, User as UserIcon, Sun, Moon } from 'lucide-react';
 
 function EntryScreen() {
   const navigate = useNavigate();
@@ -158,7 +158,7 @@ function RoleSelectPage() {
   );
 }
 
-function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint, loading, role }) {
+function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint, loading, role, isDark, setIsDark }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const navRef = useRef();
@@ -166,7 +166,6 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
   const username = localStorage.getItem('username') || sessionStorage.getItem('username');
   const city = localStorage.getItem('city') || sessionStorage.getItem('city');
   const userRole = localStorage.getItem('role') || sessionStorage.getItem('role') || role;
-
 
   useEffect(() => {
     function handleClick(e) {
@@ -246,36 +245,46 @@ function DashboardNav({ user, onBack, onLogout, onComplaint, onHospitalComplaint
           </button>
         </div>
       )}
-      {/* Profile button (right) */}
-      <div className="flex-shrink-0 w-14 flex items-center justify-end ml-auto">
+      {/* Dark mode toggle (right, before profile) */}
+      <div className="flex-shrink-0 flex items-center gap-2 ml-auto">
         <button
-          className="joyride-profile flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow-lg border-2 border-white hover:scale-105 transition p-2"
-          onClick={handleProfileToggle}
-          aria-label="Profile"
-          style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.18)' }}
+          className="flex items-center justify-center rounded-full bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-700 dark:to-gray-900 shadow border-2 border-white hover:scale-105 transition p-2 mr-2"
+          aria-label="Toggle dark mode"
+          onClick={() => setIsDark(d => !d)}
         >
-          <UserIcon className="h-9 w-9 text-white" />
+          {isDark ? <Sun className="h-7 w-7 text-yellow-400 transition-all rotate-0 scale-100" /> : <Moon className="h-7 w-7 text-gray-700 dark:text-gray-200 transition-all rotate-0 scale-100" />}
         </button>
-        {profileOpen && (
-          <div className="absolute right-0 top-12 bg-white rounded-xl shadow-2xl border border-gray-200 flex flex-col gap-2 p-4 min-w-[220px] animate-fade-in z-50">
-            <div className="flex items-center gap-3 mb-2">
-              <UserIcon className="h-10 w-10 text-blue-500" />
-              <div>
-                <div className="font-bold text-lg text-blue-900">{username || 'User'}</div>
-                <div className="text-xs text-gray-500">{userRole}</div>
+        {/* Profile button (right) */}
+        <div className="w-14 flex items-center justify-end">
+          <button
+            className="joyride-profile flex items-center justify-center rounded-full bg-gradient-to-br from-blue-400 to-green-400 shadow-lg border-2 border-white hover:scale-105 transition p-2"
+            onClick={handleProfileToggle}
+            aria-label="Profile"
+            style={{ boxShadow: '0 4px 16px rgba(56,189,248,0.18)' }}
+          >
+            <UserIcon className="h-9 w-9 text-white" />
+          </button>
+          {profileOpen && (
+            <div className="absolute right-0 top-12 bg-white rounded-xl shadow-2xl border border-gray-200 flex flex-col gap-2 p-4 min-w-[220px] animate-fade-in z-50">
+              <div className="flex items-center gap-3 mb-2">
+                <UserIcon className="h-10 w-10 text-blue-500" />
+                <div>
+                  <div className="font-bold text-lg text-blue-900">{username || 'User'}</div>
+                  <div className="text-xs text-gray-500">{userRole}</div>
+                </div>
               </div>
+              {city && <div className="text-sm text-gray-700">City: <span className="font-semibold">{city}</span></div>}
+              <div className="text-xs text-gray-400 mt-2">Logged in as {userRole}</div>
+              <button className="mt-3 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-semibold shadow" onClick={() => { setProfileOpen(false); onLogout(); }}>Logout</button>
             </div>
-            {city && <div className="text-sm text-gray-700">City: <span className="font-semibold">{city}</span></div>}
-            <div className="text-xs text-gray-400 mt-2">Logged in as {userRole}</div>
-            <button className="mt-3 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-semibold shadow" onClick={() => { setProfileOpen(false); onLogout(); }}>Logout</button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
-function AdminDashboard() {
+function AdminDashboard({ isDark, setIsDark }) {
   const navigate = useNavigate();
   const [showComplaint, setShowComplaint] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -314,8 +323,11 @@ function AdminDashboard() {
         onBack={handleBack}
         onLogout={handleLogout}
         onComplaint={() => setShowComplaint(true)}
+        onHospitalComplaint={() => window.open('https://www.nmc.org.in/complaints/', '_blank')}
         loading={logoutLoading || complaintLoading}
         role="ADMIN"
+        isDark={isDark}
+        setIsDark={setIsDark}
       />
       <ConfirmationDialog
         open={confirmDialog.open}
@@ -340,7 +352,7 @@ function AdminDashboard() {
   );
 }
 
-function UserDashboard() {
+function UserDashboard({ isDark, setIsDark }) {
   const navigate = useNavigate();
   const [showComplaint, setShowComplaint] = useState(false);
   const [logoutLoading, setLogoutLoading] = useState(false);
@@ -388,6 +400,8 @@ function UserDashboard() {
         onHospitalComplaint={() => window.open('https://www.nmc.org.in/complaints/', '_blank')}
         loading={logoutLoading || complaintLoading}
         role="USER"
+        isDark={isDark}
+        setIsDark={setIsDark}
       />
       <ConfirmationDialog
         open={confirmDialog.open}
@@ -404,15 +418,15 @@ function UserDashboard() {
   );
 }
 
-function App() {
+function App({ isDark, setIsDark }) {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 flex flex-col">
       <Routes>
         <Route path="/" element={<EntryScreen />} />
         <Route path="/role" element={<RoleSelectPage />} />
-        <Route path="/admin/dashboard" element={<ProtectedRoute role="ADMIN"><AdminDashboard /></ProtectedRoute>} />
-        <Route path="/user/dashboard" element={<ProtectedRoute role="USER"><UserDashboard /></ProtectedRoute>} />
+        <Route path="/admin/dashboard" element={<ProtectedRoute role="ADMIN"><AdminDashboard isDark={isDark} setIsDark={setIsDark} /></ProtectedRoute>} />
+        <Route path="/user/dashboard" element={<ProtectedRoute role="USER"><UserDashboard isDark={isDark} setIsDark={setIsDark} /></ProtectedRoute>} />
       </Routes>
       <Toaster />
     </div>
