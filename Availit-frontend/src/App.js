@@ -20,10 +20,10 @@ import { Menu, User as UserIcon, Sun, Moon } from 'lucide-react';
 function EntryScreen() {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-background text-foreground">
       <img src="/availit-logo.jpg" alt="AvailIt Logo" className="w-72 h-72 object-contain mb-10 mt-8 drop-shadow-2xl" />
       <h1
-        className="text-5xl md:text-7xl font-extrabold text-white mb-2 tracking-wide text-center drop-shadow-2xl animate-slidein"
+        className="text-5xl md:text-7xl font-extrabold mb-2 tracking-wide text-center drop-shadow-2xl animate-slidein"
         style={{
           fontFamily: 'Montserrat, Arial, sans-serif',
           textShadow: '0 4px 24px #1e3a8a, 0 2px 0 #1e3a8a',
@@ -64,7 +64,7 @@ function RoleSelectPage() {
     setModalOpen(true);
   };
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-b from-blue-400 to-white">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-background text-foreground">
       {/* Large animated pulse line behind logo */}
       <div className="relative flex flex-col items-center w-full max-w-2xl mb-8" style={{height: '140px'}}>
         <svg
@@ -110,10 +110,10 @@ function RoleSelectPage() {
       {/* Animated Welcome Message */}
       <div className="w-full flex justify-center">
         <div className="relative w-full max-w-xl mx-auto bg-white/80 rounded-2xl shadow-xl px-4 py-6 mt-2 mb-6 animate-slidein-left">
-          <h2 className="text-3xl sm:text-4xl font-extrabold mb-3 text-center text-gray-900 tracking-tight wave-text" style={{ fontFamily: 'Montserrat, Arial, sans-serif', letterSpacing: '0.04em' }}>
+          <h2 className="text-3xl sm:text-4xl font-extrabold mb-3 text-center tracking-tight wave-text" style={{ fontFamily: 'Montserrat, Arial, sans-serif', letterSpacing: '0.04em' }}>
             Welcome to <span className="inline-block">AvailIt Hospital Availability</span>
           </h2>
-          <p className="text-lg sm:text-xl font-semibold text-center text-blue-900/90" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
+          <p className="text-lg sm:text-xl font-semibold text-center" style={{ fontFamily: 'Montserrat, Arial, sans-serif' }}>
             Real-time hospital bed tracking and management system
           </p>
           <style>{`
@@ -421,7 +421,7 @@ function UserDashboard({ isDark, setIsDark }) {
 function App({ isDark, setIsDark }) {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-blue-400 via-blue-500 to-blue-700 flex flex-col">
+    <div className="min-h-screen w-full bg-background text-foreground flex flex-col">
       <Routes>
         <Route path="/" element={<EntryScreen />} />
         <Route path="/role" element={<RoleSelectPage />} />
