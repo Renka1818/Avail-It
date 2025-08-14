@@ -1,24 +1,19 @@
 import { createTheme } from '@mui/material/styles';
 
-export function getTheme(mode = 'light') {
+export function getTheme() {
   return createTheme({
     palette: {
-      mode,
+      mode: 'light',
       primary: {
         main: '#1976d2',
       },
       secondary: {
         main: '#ff9800',
       },
-      background: mode === 'dark'
-        ? {
-            default: '#181A20',
-            paper: '#23272F',
-          }
-        : {
-            default: '#f4f6fa',
-            paper: '#fff',
-          },
+      background: {
+        default: '#f4f6fa',
+        paper: '#fff',
+      },
     },
     typography: {
       h3: {
@@ -26,7 +21,7 @@ export function getTheme(mode = 'light') {
         color: '#1976d2',
       },
       h6: {
-        color: mode === 'dark' ? '#fff' : '#333',
+        color: '#333',
       },
     },
   });

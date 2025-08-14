@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 4001;
 
 app.use(cors({
-  origin: 'https://avail-it.vercel.app',
+  origin: 'http://localhost:3000',
   credentials: true
 }));
 
