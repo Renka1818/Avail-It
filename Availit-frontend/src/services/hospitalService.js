@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_BACKEND_URL + '/api/hospitals';
-const AUTH_URL = process.env.REACT_APP_BACKEND_URL + '/api/auth';
-const SCRAPPER_URL = process.env.REACT_APP_SCRAPPER_URL;
+const API_URL = 'http://localhost:8080/api/hospitals';
+const AUTH_URL = 'http://localhost:8080/api/auth';
+const SCRAPPER_URL = 'http://localhost:4001';
 axios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token');

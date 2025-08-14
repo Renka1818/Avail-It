@@ -232,7 +232,7 @@ function UserHospitalSearch({ showLiveDataToast }) {
     }
     setCoordsLoading(true);
     setCoordsError(null);
-    fetch(`${process.env.REACT_APP_SCRAPPER_URL}/api/location?city=${encodeURIComponent(city)}`)
+            fetch(`http://localhost:4001/api/location?city=${encodeURIComponent(city)}`)
       .then(res => res.json())
       .then(data => {
         if (data && data.length > 0) {

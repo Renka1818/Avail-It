@@ -46,7 +46,9 @@ const SignUpModal = ({ open, onClose, defaultRole }) => {
     }
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/register`, {
+      // TODO: For deployment, change the backend URL to the actual backend URL
+      //const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/auth/register`, {
+      const res = await fetch(`http://localhost:8080/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, role }),
